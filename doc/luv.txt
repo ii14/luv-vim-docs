@@ -82,7 +82,7 @@ Pseudo-Types
       variable arguments (...) of type nil, boolean, number, string, or userdata
 
 ==============================================================================
-CONTENTS *luv-contents*
+CONTENTS                                                          *luv-contents*
 
 This documentation is mostly a retelling of the libuv API documentation within
 the context of luv's Lua API. Low-level implementation details and unexposed C
@@ -117,7 +117,7 @@ to behavior seen in the Lua module.
 - Metrics operations                          |luv-metrics-operations|
 
 ==============================================================================
-ERROR HANDLING *luv-error-handling*
+ERROR HANDLING                                              *luv-error-handling*
 
 In libuv, errors are negative numbered constants; however, these errors and
 the functions used to handle them are not exposed to luv users. Instead, if an
@@ -137,16 +137,16 @@ relevant to the operation of the function, or the integer 0 to indicate
 success, or sometimes nothing at all. These cases are documented below.
 
 ==============================================================================
-VERSION CHECKING *luv-version-checking*
+VERSION CHECKING                                          *luv-version-checking*
 
-uv.version() *uv.version()*
+uv.version()                                                      *uv.version()*
     Returns the libuv version packed into a single integer. 8 bits are used
     for each component, with the patch number stored in the 8 least
     significant bits. For example, this would be 0x010203 in libuv 1.2.3.
 
     Returns: integer
 
-uv.version_string() *uv.version_string()*
+uv.version_string()                                        *uv.version_string()*
     Returns the libuv version number as a string. For example, this would be
     "1.2.3" in libuv 1.2.3. For non-release versions, the version suffix is
     included.
@@ -154,7 +154,7 @@ uv.version_string() *uv.version_string()*
     Returns: string
 
 ==============================================================================
-uv_loop_t - Event loop *uv_loop_t*
+uv_loop_t - Event loop                                               *uv_loop_t*
     The event loop is the central part of libuv's functionality. It takes care
     of polling for I/O and scheduling callbacks to be run based on different
     sources of events.
@@ -164,7 +164,7 @@ uv_loop_t - Event loop *uv_loop_t*
     as each thread has it's own Lua state with its corresponding own uv loop.
     This loop is not directly exposed to users in the Lua module.
 
-uv.loop_close() *uv.loop_close()*
+uv.loop_close()                                                *uv.loop_close()*
     Closes all internal loop resources. In normal execution, the loop will
     automatically be closed when it is garbage collected by Lua, so it is not
     necessary to explicitly call |uv.loop_close()|. Call this function only
@@ -173,7 +173,7 @@ uv.loop_close() *uv.loop_close()*
 
     Returns: 0 or |luv-fail|
 
-uv.run([{mode}]) *uv.run()*
+uv.run([{mode}])                                                      *uv.run()*
     Parameters:
     - {mode}: string or nil (default: "default")
 
@@ -201,7 +201,7 @@ uv.run([{mode}]) *uv.run()*
     if you use the luv bindings directly, you need to call this after
     registering your initial set of event callbacks to start the event loop.
 
-uv.loop_configure({option}, {...}) *uv.loop_configure()*
+uv.loop_configure({option}, {...})                         *uv.loop_configure()*
     Parameters:
     - {option}: string
     - {...}: depends on option, see below
@@ -231,19 +231,19 @@ uv.loop_configure({option}, {...}) *uv.loop_configure()*
     Note: Be prepared to handle the ENOSYS error; it means the loop option
     is not supported by the platform.
 
-uv.loop_mode() *uv.loop_mode()*
+uv.loop_mode()                                                  *uv.loop_mode()*
     If the loop is running, returns a string indicating the mode in use. If the
     loop is not running, nil is returned instead.
 
     Returns: string or nil
 
-uv.loop_alive() *uv.loop_alive()*
+uv.loop_alive()                                                *uv.loop_alive()*
     Returns true if there are referenced active handles, active requests, or
     closing handles in the loop; otherwise, false.
 
     Returns: boolean or |luv-fail|
 
-uv.stop() *uv.stop()*
+uv.stop()                                                            *uv.stop()*
     Stop the event loop, causing |uv.run()| to end as soon as possible. This
     will happen not sooner than the next loop iteration. If this function was
     called before blocking for I/O, the loop won't block for I/O on this
@@ -251,7 +251,7 @@ uv.stop() *uv.stop()*
 
     Returns: Nothing.
 
-uv.backend_fd() *uv.backend_fd()*
+uv.backend_fd()                                                *uv.backend_fd()*
     Get backend file descriptor. Only kqueue, epoll, and event ports are
     supported.
 
@@ -263,13 +263,13 @@ uv.backend_fd() *uv.backend_fd()*
     Note: Embedding a kqueue fd in another kqueue pollset doesn't work on all
     platforms. It's not an error to add the fd but it never generates events.
 
-uv.backend_timeout() *uv.backend_timeout()*
+uv.backend_timeout()                                      *uv.backend_timeout()*
     Get the poll timeout. The return value is in milliseconds, or -1 for no
     timeout.
 
     Returns: integer
 
-uv.now() *uv.now()*
+uv.now()                                                              *uv.now()*
     Returns the current timestamp in milliseconds. The timestamp is cached at
     the start of the event loop tick, see |uv.update_time()| for details and
     rationale.
@@ -282,7 +282,7 @@ uv.now() *uv.now()*
 
     Note: Use |uv.hrtime()| if you need sub-millisecond granularity.
 
-uv.update_time() *uv.update_time()*
+uv.update_time()                                              *uv.update_time()*
     Update the event loop's concept of "now". Libuv caches the current time at
     the start of the event loop tick in order to reduce the number of
     time-related system calls.
@@ -293,7 +293,7 @@ uv.update_time() *uv.update_time()*
 
     Returns: Nothing.
 
-uv.walk({callback}) *uv.walk()*
+uv.walk({callback})                                                  *uv.walk()*
     Parameters:
     - {callback}: |luv-callable|
       - {handle}: userdata for sub-type of |uv_handle_t|
@@ -310,10 +310,10 @@ uv.walk({callback}) *uv.walk()*
     end)
 <
 ==============================================================================
-uv_req_t - Base request *uv_req_t*
+uv_req_t - Base request                                               *uv_req_t*
     uv_req_t is the base type for all libuv request types.
 
-uv.cancel({req}) *uv.cancel()*
+uv.cancel({req})                                                   *uv.cancel()*
     > method form `req:cancel()`
     Parameters:
     - {req}: userdata for sub-type of |uv_req_t|
@@ -324,7 +324,7 @@ uv.cancel({req}) *uv.cancel()*
 
     Returns: 0 or |luv-fail|
 
-uv.req_get_type({req}) *uv.req_get_type()*
+uv.req_get_type({req})                                       *uv.req_get_type()*
     > method form `req:get_type()`
     Parameters:
     - {req}: userdata for sub-type of |uv_req_t|
@@ -335,11 +335,11 @@ uv.req_get_type({req}) *uv.req_get_type()*
     Returns: string, integer
 
 ==============================================================================
-uv_handle_t - Base handle *uv_handle_t*
+uv_handle_t - Base handle                                          *uv_handle_t*
     uv_handle_t is the base type for all libuv handle types. All API functions
     defined here work with any handle type.
 
-uv.is_active({handle}) *uv.is_active()*
+uv.is_active({handle})                                          *uv.is_active()*
     > method form `handle:is_active()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -362,7 +362,7 @@ uv.is_active({handle}) *uv.is_active()*
 
     Returns: boolean or |luv-fail|
 
-uv.is_closing({handle}) *uv.is_closing()*
+uv.is_closing({handle})                                        *uv.is_closing()*
     > method form `handle:is_closing()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -374,7 +374,7 @@ uv.is_closing({handle}) *uv.is_closing()*
     Note: This function should only be used between the initialization of the
     handle and the arrival of the close callback.
 
-uv.close({handle}, [{callback}]) *uv.close()*
+uv.close({handle}, [{callback}])                                    *uv.close()*
     > method form `handle:close([callback])`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -393,7 +393,7 @@ uv.close({handle}, [{callback}]) *uv.close()*
 
     Returns: Nothing.
 
-uv.ref({handle}) *uv.ref()*
+uv.ref({handle})                                                      *uv.ref()*
     > method form `handle:ref()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -406,7 +406,7 @@ uv.ref({handle}) *uv.ref()*
 
     See |luv-reference-counting|.
 
-uv.unref({handle}) *uv.unref()*
+uv.unref({handle})                                                  *uv.unref()*
     > method form `handle:unref()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -418,7 +418,7 @@ uv.unref({handle}) *uv.unref()*
 
     See |luv-reference-counting|.
 
-uv.has_ref({handle}) *uv.has_ref()*
+uv.has_ref({handle})                                              *uv.has_ref()*
     > method form `handle:has_ref()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -429,7 +429,7 @@ uv.has_ref({handle}) *uv.has_ref()*
 
     See |luv-reference-counting|.
 
-uv.send_buffer_size({handle}, [{size}]) *uv.send_buffer_size()*
+uv.send_buffer_size({handle}, [{size}])                  *uv.send_buffer_size()*
     > method form `handle:send_buffer_size([size])`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -451,7 +451,7 @@ uv.send_buffer_size({handle}, [{size}]) *uv.send_buffer_size()*
     Note: Linux will set double the size and return double the size of the
     original set value.
 
-uv.recv_buffer_size({handle}, [{size}]) *uv.recv_buffer_size()*
+uv.recv_buffer_size({handle}, [{size}])                  *uv.recv_buffer_size()*
     > method form `handle:recv_buffer_size([size])`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -473,7 +473,7 @@ uv.recv_buffer_size({handle}, [{size}]) *uv.recv_buffer_size()*
     Note: Linux will set double the size and return double the size of the
     original set value.
 
-uv.fileno({handle}) *uv.fileno()*
+uv.fileno({handle})                                                *uv.fileno()*
     > method form `handle:fileno()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -492,7 +492,7 @@ uv.fileno({handle}) *uv.fileno()*
     control of the file descriptor so any change to it may lead to
     malfunction.
 
-uv.handle_get_type({handle}) *uv.handle_get_type()*
+uv.handle_get_type({handle})                              *uv.handle_get_type()*
     > method form `handle:get_type()`
     Parameters:
     - {handle}: userdata for sub-type of |uv_handle_t|
@@ -504,7 +504,7 @@ uv.handle_get_type({handle}) *uv.handle_get_type()*
     Returns: string, integer
 
 ------------------------------------------------------------------------------
-Reference counting *luv-reference-counting*
+Reference counting                                      *luv-reference-counting*
     The libuv event loop (if run in the default mode) will run until there are
     no active and referenced handles left. The user can force the loop to exit
     early by unreferencing handles which are active, for example by calling
@@ -517,12 +517,12 @@ Reference counting *luv-reference-counting*
     for a more detailed explanation on what being active involves.
 
 ==============================================================================
-uv_timer_t - Timer handle *uv_timer_t*
+uv_timer_t - Timer handle                                           *uv_timer_t*
     > |uv_handle_t| functions also apply.
 
     Timer handles are used to schedule callbacks to be called in the future.
 
-uv.new_timer() *uv.new_timer()*
+uv.new_timer()                                                  *uv.new_timer()*
     Creates and initializes a new |uv_timer_t|. Returns the Lua userdata
     wrapping it.
 
@@ -554,7 +554,7 @@ uv.new_timer() *uv.new_timer()*
       timer:close()
     end
 <
-uv.timer_start({timer}, {timeout}, {repeat}, {callback}) *uv.timer_start()*
+uv.timer_start({timer}, {timeout}, {repeat}, {callback})      *uv.timer_start()*
     > method form `timer:start(timeout, repeat, callback)`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -570,7 +570,7 @@ uv.timer_start({timer}, {timeout}, {repeat}, {callback}) *uv.timer_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.timer_stop({timer}) *uv.timer_stop()*
+uv.timer_stop({timer})                                         *uv.timer_stop()*
     > method form `timer:stop()`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -579,7 +579,7 @@ uv.timer_stop({timer}) *uv.timer_stop()*
 
     Returns: 0 or |luv-fail|
 
-uv.timer_again({timer}) *uv.timer_again()*
+uv.timer_again({timer})                                       *uv.timer_again()*
     > method form `timer:again()`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -590,7 +590,7 @@ uv.timer_again({timer}) *uv.timer_again()*
 
     Returns: 0 or |luv-fail|
 
-uv.timer_set_repeat({timer}, {repeat}) *uv.timer_set_repeat()*
+uv.timer_set_repeat({timer}, {repeat})                   *uv.timer_set_repeat()*
     > method form `timer:set_repeat(repeat)`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -608,7 +608,7 @@ uv.timer_set_repeat({timer}, {repeat}) *uv.timer_set_repeat()*
 
     Returns: Nothing.
 
-uv.timer_get_repeat({timer}) *uv.timer_get_repeat()*
+uv.timer_get_repeat({timer})                             *uv.timer_get_repeat()*
     > method form `timer:get_repeat()`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -617,7 +617,7 @@ uv.timer_get_repeat({timer}) *uv.timer_get_repeat()*
 
     Returns: integer
 
-uv.timer_get_due_in({timer}) *uv.timer_get_due_in()*
+uv.timer_get_due_in({timer})                             *uv.timer_get_due_in()*
     > method form `timer:get_due_in()`
     Parameters:
     - {timer}: |uv_timer_t| userdata
@@ -630,7 +630,7 @@ uv.timer_get_due_in({timer}) *uv.timer_get_due_in()*
     Note: New in libuv version 1.40.0.
 
 ==============================================================================
-uv_prepare_t - Prepare handle *uv_prepare_t*
+uv_prepare_t - Prepare handle                                     *uv_prepare_t*
     > |uv_handle_t| functions also apply.
 
     Prepare handles will run the given callback once per loop iteration, right
@@ -641,13 +641,13 @@ uv_prepare_t - Prepare handle *uv_prepare_t*
       print("Before I/O polling")
     end)
 <
-uv.new_prepare() *uv.new_prepare()*
+uv.new_prepare()                                              *uv.new_prepare()*
     Creates and initializes a new |uv_prepare_t|. Returns the Lua userdata
     wrapping it.
 
     Returns: |uv_prepare_t| userdata or |luv-fail|
 
-uv.prepare_start({prepare}, {callback}) *uv.prepare_start()*
+uv.prepare_start({prepare}, {callback})                     *uv.prepare_start()*
     > method form `prepare:start(callback)`
     Parameters:
     - {prepare}: |uv_prepare_t| userdata
@@ -657,7 +657,7 @@ uv.prepare_start({prepare}, {callback}) *uv.prepare_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.prepare_stop({prepare}) *uv.prepare_stop()*
+uv.prepare_stop({prepare})                                   *uv.prepare_stop()*
     > method form `prepare:stop()`
     Parameters:
     - prepare: |uv_prepare_t| userdata
@@ -667,7 +667,7 @@ uv.prepare_stop({prepare}) *uv.prepare_stop()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-uv_check_t - Check handle *uv_check_t*
+uv_check_t - Check handle                                           *uv_check_t*
     > |uv_handle_t| functions also apply.
 
     Check handles will run the given callback once per loop iteration, right
@@ -678,13 +678,13 @@ uv_check_t - Check handle *uv_check_t*
       print("After I/O polling")
     end)
 <
-uv.new_check() *uv.new_check()*
+uv.new_check()                                                  *uv.new_check()*
     Creates and initializes a new |uv_check_t|. Returns the Lua userdata
     wrapping it.
 
     Returns: |uv_check_t| userdata or |luv-fail|
 
-uv.check_start({check}, {callback}) *uv.check_start()*
+uv.check_start({check}, {callback})                           *uv.check_start()*
     > method form `check:start(callback)`
     Parameters:
     - {check}: |uv_check_t| userdata
@@ -694,7 +694,7 @@ uv.check_start({check}, {callback}) *uv.check_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.check_stop({check}) *uv.check_stop()*
+uv.check_stop({check})                                         *uv.check_stop()*
     > method form `check:stop()`
     Parameters:
     - {check}: |uv_check_t| userdata
@@ -704,7 +704,7 @@ uv.check_stop({check}) *uv.check_stop()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-uv_idle_t - Idle handle *uv_idle_t*
+uv_idle_t - Idle handle                                              *uv_idle_t*
     > |uv_handle_t| functions also apply.
 
     Idle handles will run the given callback once per loop iteration, right
@@ -722,13 +722,13 @@ uv_idle_t - Idle handle *uv_idle_t*
       print("Before I/O polling, no blocking")
     end)
 <
-uv.new_idle() *uv.new_idle()*
+uv.new_idle()                                                    *uv.new_idle()*
     Creates and initializes a new |uv_idle_t|. Returns the Lua userdata wrapping
     it.
 
     Returns: |uv_idle_t| userdata or |luv-fail|
 
-uv.idle_start({idle}, {callback}) *uv.idle_start()*
+uv.idle_start({idle}, {callback})                              *uv.idle_start()*
     > method form `idle:start(callback)`
     Parameters:
     - {idle}: |uv_idle_t| userdata
@@ -738,7 +738,7 @@ uv.idle_start({idle}, {callback}) *uv.idle_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.idle_stop({check}) *uv.idle_stop()*
+uv.idle_stop({check})                                           *uv.idle_stop()*
     > method form `idle:stop()`
     Parameters:
     - {idle}: |uv_idle_t| userdata
@@ -748,7 +748,7 @@ uv.idle_stop({check}) *uv.idle_stop()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-uv_async_t - Async handle *uv_async_t*
+uv_async_t - Async handle                                           *uv_async_t*
     > |uv_handle_t| functions also apply.
 
     Async handles allow the user to "wakeup" the event loop and get a callback
@@ -762,7 +762,7 @@ uv_async_t - Async handle *uv_async_t*
 
     async:send()
 <
-uv.new_async([{callback}]) *uv.new_async()*
+uv.new_async([{callback}])                                      *uv.new_async()*
     Parameters:
     - {callback}: |luv-callable| or nil
       - {...}: |luv-threadargs| passed to/from `uv.async_send(async, ...)`
@@ -775,7 +775,7 @@ uv.new_async([{callback}]) *uv.new_async()*
     Note: Unlike other handle initialization functions, this immediately
     starts the handle.
 
-uv.async_send({async}, {...}) *uv.async_send()*
+uv.async_send({async}, {...})                                  *uv.async_send()*
     > method form `async:send(...)`
     Parameters:
     - {async}: |uv_async_t| userdata
@@ -795,7 +795,7 @@ uv.async_send({async}, {...}) *uv.async_send()*
     called again after the callback was called, it will be called again.
 
 ==============================================================================
-uv_poll_t - Poll handle *uv_poll_t*
+uv_poll_t - Poll handle                                              *uv_poll_t*
     > |uv_handle_t| functions also apply.
 
     Poll handles are used to watch file descriptors for readability and
@@ -824,7 +824,7 @@ uv_poll_t - Poll handle *uv_poll_t*
     Note: On windows only sockets can be polled with poll handles. On Unix any
     file descriptor that would be accepted by poll(2) can be used.
 
-uv.new_poll({fd}) *uv.new_poll()*
+uv.new_poll({fd})                                                *uv.new_poll()*
     Parameters:
     - {fd}: integer
 
@@ -834,7 +834,7 @@ uv.new_poll({fd}) *uv.new_poll()*
 
     Returns: |uv_poll_t| userdata or |luv-fail|
 
-uv.new_socket_poll({fd}) *uv.new_socket_poll()*
+uv.new_socket_poll({fd})                                  *uv.new_socket_poll()*
     Parameters:
     - {fd}: integer
 
@@ -845,7 +845,7 @@ uv.new_socket_poll({fd}) *uv.new_socket_poll()*
 
     Returns: |uv_poll_t| userdata or |luv-fail|
 
-uv.poll_start({poll}, {events}, {callback}) *uv.poll_start()*
+uv.poll_start({poll}, {events}, {callback})                    *uv.poll_start()*
     > method form `poll:start(events, callback)`
     Parameters:
     - {poll}: |uv_poll_t| userdata
@@ -869,7 +869,7 @@ uv.poll_start({poll}, {events}, {callback}) *uv.poll_start()*
     Note Calling |uv.poll_start()| on a handle that is already active is fine.
     Doing so will update the events mask that is being watched for.
 
-uv.poll_stop({poll}) *uv.poll_stop()*
+uv.poll_stop({poll})                                            *uv.poll_stop()*
     > method form `poll:stop()`
     Parameters:
     - {poll}: |uv_poll_t| userdata
@@ -879,11 +879,7 @@ uv.poll_stop({poll}) *uv.poll_stop()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-==============================================================================
-==============================================================================
-
-==============================================================================
-uv_signal_t - Signal handle *uv_signal_t*
+uv_signal_t - Signal handle                                        *uv_signal_t*
     > |uv_handle_t| functions also apply.
 
     Signal handles implement Unix style signal handling on a per-event loop
@@ -931,13 +927,13 @@ uv_signal_t - Signal handle *uv_signal_t*
       os.exit(1)
     end)
 <
-uv.new_signal() *uv.new_signal()*
+uv.new_signal()                                                *uv.new_signal()*
     Creates and initializes a new |uv_signal_t|. Returns the Lua userdata
     wrapping it.
 
     Returns: |uv_signal_t| userdata or |luv-fail|
 
-uv.signal_start({signal}, {signum}, {callback}) *uv.signal_start()*
+uv.signal_start({signal}, {signum}, {callback})              *uv.signal_start()*
     > method form `signal:start(signum, callback)`
     Parameters:
     - {signal}: |uv_signal_t| userdata
@@ -949,7 +945,8 @@ uv.signal_start({signal}, {signum}, {callback}) *uv.signal_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.signal_start_oneshot({signal}, {signum}, {callback}) *uv.signal_start_oneshot()*
+                                                     *uv.signal_start_oneshot()*
+uv.signal_start_oneshot({signal}, {signum}, {callback})
     > method form `signal:start_oneshot(signum, callback)`
     Parameters:
     - {signal}: |uv_signal_t| userdata
@@ -962,7 +959,7 @@ uv.signal_start_oneshot({signal}, {signum}, {callback}) *uv.signal_start_oneshot
 
     Returns: 0 or |luv-fail|
 
-uv.signal_stop({signal}) *uv.signal_stop()*
+uv.signal_stop({signal})                                      *uv.signal_stop()*
     > method form `signal:stop()`
     Parameters:
     - {signal}: |uv_signal_t| userdata
@@ -972,13 +969,13 @@ uv.signal_stop({signal}) *uv.signal_stop()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-uv_process_t - Process handle *uv_process_t*
+uv_process_t - Process handle                                     *uv_process_t*
     > |uv_handle_t| functions also apply.
 
     Process handles will spawn a new process and allow the user to control it
     and establish communication channels with it using streams.
 
-uv.disable_stdio_inheritance() *uv.disable_stdio_inheritance()*
+uv.disable_stdio_inheritance()                  *uv.disable_stdio_inheritance()*
     Disables inheritance for file descriptors / handles that this process
     inherited from its parent. The effect is that child processes spawned by
     this process don't accidentally inherit these handles.
@@ -993,7 +990,7 @@ uv.disable_stdio_inheritance() *uv.disable_stdio_inheritance()*
     that libuv can discover all file descriptors that were inherited. In
     general it does a better job on Windows than it does on Unix.
 
-uv.spawn({path}, {options}, {on_exit}) *uv.spawn()*
+uv.spawn({path}, {options}, {on_exit})                              *uv.spawn()*
     Parameters:
     - {path}: string
     - {options}: table (see below)
@@ -1096,7 +1093,7 @@ uv.spawn({path}, {options}, {on_exit}) *uv.spawn()*
 
     Returns: |uv_process_t| userdata, integer
 
-uv.process_kill({process}, {signum}) *uv.process_kill()*
+uv.process_kill({process}, {signum})                         *uv.process_kill()*
     > method form `process:kill(signum)`
     Parameters:
     - {process}: |uv_process_t| userdata
@@ -1107,7 +1104,7 @@ uv.process_kill({process}, {signum}) *uv.process_kill()*
 
     Returns: 0 or |luv-fail|
 
-uv.kill({pid}, {signum}) *uv.kill()*
+uv.kill({pid}, {signum})                                             *uv.kill()*
     Parameters:
     - {pid}: integer
     - {signum}: integer or string
@@ -1117,7 +1114,7 @@ uv.kill({pid}, {signum}) *uv.kill()*
 
     Returns: 0 or |luv-fail|
 
-uv.process_get_pid({process}) *uv.process_get_pid()*
+uv.process_get_pid({process})                             *uv.process_get_pid()*
     > method form `process:get_pid()`
     Parameters:
     - {process}: |uv_process_t| userdata
@@ -1127,14 +1124,14 @@ uv.process_get_pid({process}) *uv.process_get_pid()*
     Returns: integer
 
 ==============================================================================
-uv_stream_t - Stream handle *uv_stream_t*
+uv_stream_t - Stream handle                                        *uv_stream_t*
     > |uv_handle_t| functions also apply.
 
     Stream handles provide an abstraction of a duplex communication channel.
     |uv_stream_t| is an abstract type, libuv provides 3 stream implementations
     in the form of |uv_tcp_t|, |uv_pipe_t| and |uv_tty_t|.
 
-uv.shutdown({stream}, [{callback}]) *uv.shutdown()*
+uv.shutdown({stream}, [{callback}])                              *uv.shutdown()*
     > method form `stream:shutdown([callback])`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1147,7 +1144,7 @@ uv.shutdown({stream}, [{callback}]) *uv.shutdown()*
 
     Returns: uv_shutdown_t userdata or |luv-fail|
 
-uv.listen({stream}, {backlog}, {callback}) *uv.listen()*
+uv.listen({stream}, {backlog}, {callback})                         *uv.listen()*
     > method form `stream:listen(backlog, callback)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1161,7 +1158,7 @@ uv.listen({stream}, {backlog}, {callback}) *uv.listen()*
 
     Returns: 0 or |luv-fail|
 
-uv.accept({stream}, {client_stream}) *uv.accept()*
+uv.accept({stream}, {client_stream})                               *uv.accept()*
     > method form `stream:accept(client_stream)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1183,7 +1180,7 @@ uv.accept({stream}, {client_stream}) *uv.accept()*
       server:accept(client)
     end)
 <
-uv.read_start({stream}, {callback}) *uv.read_start()*
+uv.read_start({stream}, {callback})                            *uv.read_start()*
     > method form `stream:read_start(callback)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1207,7 +1204,7 @@ uv.read_start({stream}, {callback}) *uv.read_start()*
       end
     end)
 <
-uv.read_stop({stream}) *uv.read_stop()*
+uv.read_stop({stream})                                          *uv.read_stop()*
     > method form `stream:read_stop()`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1219,7 +1216,7 @@ uv.read_stop({stream}) *uv.read_stop()*
 
     Returns: 0 or |luv-fail|
 
-uv.write({stream}, {data}, [{callback}]) *uv.write()*
+uv.write({stream}, {data}, [{callback}])                            *uv.write()*
     > method form `stream:write(data, [callback])`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1237,7 +1234,7 @@ uv.write({stream}, {data}, [{callback}]) *uv.write()*
 
     Returns: uv_write_t userdata or |luv-fail|
 
-uv.write2({stream}, {data}, {send_handle}, [{callback}]) *uv.write2()*
+uv.write2({stream}, {data}, {send_handle}, [{callback}])           *uv.write2()*
     > method form `stream:write2(data, send_handle, [callback])`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1255,7 +1252,7 @@ uv.write2({stream}, {data}, {send_handle}, [{callback}]) *uv.write2()*
     connection (listening or connected state). Bound sockets or pipes will be
     assumed to be servers.
 
-uv.try_write({stream}, {data}) *uv.try_write()*
+uv.try_write({stream}, {data})                                  *uv.try_write()*
     > method form `stream:try_write(data)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1269,7 +1266,7 @@ uv.try_write({stream}, {data}) *uv.try_write()*
 
     Returns: integer or |luv-fail|
 
-uv.try_write2({stream}, {data}, {send_handle}) *uv.try_write2()*
+uv.try_write2({stream}, {data}, {send_handle})                 *uv.try_write2()*
     > method form `stream:try_write2(data, send_handle)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1284,7 +1281,7 @@ uv.try_write2({stream}, {data}, {send_handle}) *uv.try_write2()*
 
     Returns: integer or |luv-fail|
 
-uv.is_readable({stream}) *uv.is_readable()*
+uv.is_readable({stream})                                      *uv.is_readable()*
     > method form `stream:is_readable()`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1293,7 +1290,7 @@ uv.is_readable({stream}) *uv.is_readable()*
 
     Returns: boolean
 
-uv.is_writable({stream}) *uv.is_writable()*
+uv.is_writable({stream})                                      *uv.is_writable()*
     > method form `stream:is_writable()`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1302,7 +1299,7 @@ uv.is_writable({stream}) *uv.is_writable()*
 
     Returns: boolean
 
-uv.stream_set_blocking({stream}, {blocking}) *uv.stream_set_blocking()*
+uv.stream_set_blocking({stream}, {blocking})          *uv.stream_set_blocking()*
     > method form `stream:set_blocking(blocking)`
     Parameters:
     - {stream}: userdata for sub-type of |uv_stream_t|
@@ -1324,19 +1321,19 @@ uv.stream_set_blocking({stream}, {blocking}) *uv.stream_set_blocking()*
     already been submitted. Therefore it is recommended to set the blocking
     mode immediately after opening or creating the stream.
 
-uv.stream_get_write_queue_size() *uv.stream_get_write_queue_size()*
+uv.stream_get_write_queue_size()              *uv.stream_get_write_queue_size()*
     > method form `stream:get_write_queue_size()`
     Returns the stream's write queue size.
 
     Returns: integer
 
 ==============================================================================
-uv_tcp_t - TCP handle *uv_tcp_t*
+uv_tcp_t - TCP handle                                                 *uv_tcp_t*
     > |uv_handle_t| and |uv_stream_t| functions also apply.
 
     TCP handles are used to represent both TCP streams and servers.
 
-uv.new_tcp([{flags}]) *uv.new_tcp()*
+uv.new_tcp([{flags}])                                             *uv.new_tcp()*
     Parameters:
     - {flags}: string or nil
 
@@ -1346,7 +1343,7 @@ uv.new_tcp([{flags}]) *uv.new_tcp()*
 
     Returns: |uv_tcp_t| userdata or |luv-fail|
 
-uv.tcp_open({tcp}, {sock}) *uv.tcp_open()*
+uv.tcp_open({tcp}, {sock})                                       *uv.tcp_open()*
     > method form `tcp:open(sock)`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1359,7 +1356,7 @@ uv.tcp_open({tcp}, {sock}) *uv.tcp_open()*
     Note: The passed file descriptor or SOCKET is not checked for its type,
     but it's required that it represents a valid stream socket.
 
-uv.tcp_nodelay({tcp}, {enable}) *uv.tcp_nodelay()*
+uv.tcp_nodelay({tcp}, {enable})                               *uv.tcp_nodelay()*
     > method form `tcp:nodelay(enable)`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1369,7 +1366,7 @@ uv.tcp_nodelay({tcp}, {enable}) *uv.tcp_nodelay()*
 
     Returns: 0 or |luv-fail|
 
-uv.tcp_keepalive({tcp}, {enable}, [{delay}]) *uv.tcp_keepalive()*
+uv.tcp_keepalive({tcp}, {enable}, [{delay}])                *uv.tcp_keepalive()*
     > method form `tcp:keepalive(enable, [delay])`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1381,7 +1378,7 @@ uv.tcp_keepalive({tcp}, {enable}, [{delay}]) *uv.tcp_keepalive()*
 
     Returns: 0 or |luv-fail|
 
-uv.tcp_simultaneous_accepts({tcp}, {enable}) *uv.tcp_simultaneous_accepts()*
+uv.tcp_simultaneous_accepts({tcp}, {enable})     *uv.tcp_simultaneous_accepts()*
     > method form `tcp:simultaneous_accepts(enable)`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1397,7 +1394,7 @@ uv.tcp_simultaneous_accepts({tcp}, {enable}) *uv.tcp_simultaneous_accepts()*
 
     Returns: 0 or |luv-fail|
 
-uv.tcp_bind({tcp}, {host}, {port}, [{flags}]) *uv.tcp_bind()*
+uv.tcp_bind({tcp}, {host}, {port}, [{flags}])                    *uv.tcp_bind()*
     > method form `tcp:bind(host, port, [flags])`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1420,7 +1417,7 @@ uv.tcp_bind({tcp}, {host}, {port}, [{flags}]) *uv.tcp_bind()*
 
     Returns: 0 or |luv-fail|
 
-uv.tcp_getpeername({tcp}) *uv.tcp_getpeername()*
+uv.tcp_getpeername({tcp})                                 *uv.tcp_getpeername()*
     > method form `tcp:getpeername()`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1432,7 +1429,7 @@ uv.tcp_getpeername({tcp}) *uv.tcp_getpeername()*
     - family : string
     - port : integer
 
-uv.tcp_getsockname({tcp}) *uv.tcp_getsockname()*
+uv.tcp_getsockname({tcp})                                 *uv.tcp_getsockname()*
     > method form `tcp:getsockname()`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1444,7 +1441,7 @@ uv.tcp_getsockname({tcp}) *uv.tcp_getsockname()*
     - family : string
     - port : integer
 
-uv.tcp_connect({tcp}, {host}, {port}, {callback}) *uv.tcp_connect()*
+uv.tcp_connect({tcp}, {host}, {port}, {callback})             *uv.tcp_connect()*
     > method form `tcp:connect(host, port, callback)`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1462,11 +1459,11 @@ uv.tcp_connect({tcp}, {host}, {port}, {callback}) *uv.tcp_connect()*
       -- check error and carry on.
     end)
 <
-uv.tcp_write_queue_size(tcp) *uv.tcp_write_queue_size()*
+uv.tcp_write_queue_size(tcp)                         *uv.tcp_write_queue_size()*
     > method form `tcp:write_queue_size()`
     Deprecated: Please use |uv.stream_get_write_queue_size()| instead.
 
-uv.tcp_close_reset([{callback}]) *uv.tcp_close_reset()*
+uv.tcp_close_reset([{callback}])                          *uv.tcp_close_reset()*
     > method form `tcp:close_reset([callback])`
     Parameters:
     - {tcp}: |uv_tcp_t| userdata
@@ -1479,7 +1476,8 @@ uv.tcp_close_reset([{callback}]) *uv.tcp_close_reset()*
 
     Returns: 0 or |luv-fail|
 
-uv.socketpair([{socktype}], [{protocol}], [{flags1}], [{flags2}]) *uv.socketpair()*
+                                                               *uv.socketpair()*
+uv.socketpair([{socktype}], [{protocol}], [{flags1}], [{flags2}])
     Parameters:
     - {socktype}: string, integer or nil (default: stream)
     - {protocol}: string, integer or nil (default: 0)
@@ -1526,7 +1524,7 @@ uv.socketpair([{socktype}], [{protocol}], [{flags1}], [{flags2}]) *uv.socketpair
     end)
 <
 ==============================================================================
-uv_pipe_t - Pipe handle *uv_pipe_t*
+uv_pipe_t - Pipe handle                                              *uv_pipe_t*
     > |uv_handle_t| and |uv_stream_t| functions also apply.
 
     Pipe handles provide an abstraction over local domain sockets on Unix and
@@ -1543,7 +1541,7 @@ uv_pipe_t - Pipe handle *uv_pipe_t*
       client:close()
     end)
 <
-uv.new_pipe([{ipc}]) *uv.new_pipe()*
+uv.new_pipe([{ipc}])                                             *uv.new_pipe()*
     Parameters:
     - {ipc}: boolean or nil (default: false)
 
@@ -1553,7 +1551,7 @@ uv.new_pipe([{ipc}]) *uv.new_pipe()*
 
     Returns: |uv_pipe_t| userdata or |luv-fail|
 
-uv.pipe_open({pipe}, {fd}) *uv.pipe_open()*
+uv.pipe_open({pipe}, {fd})                                      *uv.pipe_open()*
     > method form `pipe:open(fd)`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1565,7 +1563,7 @@ uv.pipe_open({pipe}, {fd}) *uv.pipe_open()*
 
     Note: The file descriptor is set to non-blocking mode.
 
-uv.pipe_bind({pipe}, {name}) *uv.pipe_bind()*
+uv.pipe_bind({pipe}, {name})                                    *uv.pipe_bind()*
     > method form `pipe:bind(name)`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1578,7 +1576,7 @@ uv.pipe_bind({pipe}, {name}) *uv.pipe_bind()*
     Note: Paths on Unix get truncated to sizeof(sockaddr_un.sun_path) bytes,
     typically between 92 and 108 bytes.
 
-uv.pipe_connect({pipe}, {name}, [{callback}]) *uv.pipe_connect()*
+uv.pipe_connect({pipe}, {name}, [{callback}])                *uv.pipe_connect()*
     > method form `pipe:connect(name, [callback])`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1593,7 +1591,7 @@ uv.pipe_connect({pipe}, {name}, [{callback}]) *uv.pipe_connect()*
     Note: Paths on Unix get truncated to sizeof(sockaddr_un.sun_path) bytes,
     typically between 92 and 108 bytes.
 
-uv.pipe_getsockname({pipe}) *uv.pipe_getsockname()*
+uv.pipe_getsockname({pipe})                              *uv.pipe_getsockname()*
     > method form `pipe:getsockname()`
     Parameters:
     - {pipe}: {uv_pipe_t} userdata
@@ -1602,7 +1600,7 @@ uv.pipe_getsockname({pipe}) *uv.pipe_getsockname()*
 
     Returns: string or |luv-fail|
 
-uv.pipe_getpeername({pipe}) *uv.pipe_getpeername()*
+uv.pipe_getpeername({pipe})                              *uv.pipe_getpeername()*
     > method form `pipe:getpeername()`
     Parameters:
     - {pipe}: {uv_pipe_t} userdata
@@ -1612,7 +1610,7 @@ uv.pipe_getpeername({pipe}) *uv.pipe_getpeername()*
 
     Returns: string or |luv-fail|
 
-uv.pipe_pending_instances({pipe}, {count}) *uv.pipe_pending_instances()*
+uv.pipe_pending_instances({pipe}, {count})         *uv.pipe_pending_instances()*
     > method form `pipe:pending_instances(count)`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1625,7 +1623,7 @@ uv.pipe_pending_instances({pipe}, {count}) *uv.pipe_pending_instances()*
 
     Note: This setting applies to Windows only.
 
-uv.pipe_pending_count({pipe}) *uv.pipe_pending_count()*
+uv.pipe_pending_count({pipe})                          *uv.pipe_pending_count()*
     > method form `pipe:pending_count()`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1634,7 +1632,7 @@ uv.pipe_pending_count({pipe}) *uv.pipe_pending_count()*
 
     Returns: integer
 
-uv.pipe_pending_type({pipe}) *uv.pipe_pending_type()*
+uv.pipe_pending_type({pipe})                            *uv.pipe_pending_type()*
     > method form `pipe:pending_type()`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1647,7 +1645,7 @@ uv.pipe_pending_type({pipe}) *uv.pipe_pending_type()*
 
     Returns: string
 
-uv.pipe_chmod({pipe}, {flags}) *uv.pipe_chmod()*
+uv.pipe_chmod({pipe}, {flags})                                 *uv.pipe_chmod()*
     > method form `pipe:chmod(flags)`
     Parameters:
     - {pipe}: |uv_pipe_t| userdata
@@ -1660,7 +1658,7 @@ uv.pipe_chmod({pipe}, {flags}) *uv.pipe_chmod()*
 
     Returns: 0 or |luv-fail|
 
-uv.pipe({read_flags}, {write_flags}) *uv.pipe()*
+uv.pipe({read_flags}, {write_flags})                                 *uv.pipe()*
     Parameters:
     - {read_flags}: table or nil
       - {nonblock}: boolean (default: false)
@@ -1699,7 +1697,7 @@ uv.pipe({read_flags}, {write_flags}) *uv.pipe()*
     end)
 <
 ==============================================================================
-uv_tty_t - TTY handle *uv_tty_t*
+uv_tty_t - TTY handle                                                 *uv_tty_t*
     > |uv_handle_t| and |uv_stream_t| functions also apply.
 
     TTY handles represent a stream for the console.
@@ -1718,7 +1716,7 @@ uv_tty_t - TTY handle *uv_tty_t*
       end
     end)
 <
-uv.new_tty({fd}, {readable}) *uv.new_tty()*
+uv.new_tty({fd}, {readable})                                      *uv.new_tty()*
     Parameters:
     - {fd}: integer
     - {readable}: boolean
@@ -1742,7 +1740,7 @@ uv.new_tty({fd}, {readable}) *uv.new_tty()*
 
     Note: If reopening the TTY fails, libuv falls back to blocking writes.
 
-uv.tty_set_mode({tty}, {mode}) *uv.tty_set_mode()*
+uv.tty_set_mode({tty}, {mode})                               *uv.tty_set_mode()*
     > method form `tty:set_mode(mode)`
     Parameters:
     - {tty}: |uv_tty_t| userdata
@@ -1759,7 +1757,7 @@ uv.tty_set_mode({tty}, {mode}) *uv.tty_set_mode()*
 
     Returns: 0 or |luv-fail|
 
-uv.tty_reset_mode() *uv.tty_reset_mode()*
+uv.tty_reset_mode()                                        *uv.tty_reset_mode()*
     To be called when the program exits. Resets TTY settings to default values
     for the next process to take over.
 
@@ -1769,7 +1767,7 @@ uv.tty_reset_mode() *uv.tty_reset_mode()*
 
     Returns: 0 or |luv-fail|
 
-uv.tty_get_winsize({tty}) *uv.tty_get_winsize()*
+uv.tty_get_winsize({tty})                                 *uv.tty_get_winsize()*
     > method form `tty:get_winsize()`
     Parameters:
     - {tty}: |uv_tty_t| userdata
@@ -1778,7 +1776,7 @@ uv.tty_get_winsize({tty}) *uv.tty_get_winsize()*
 
     Returns: integer, integer or |luv-fail|
 
-uv.tty_set_vterm_state({state}) *uv.tty_set_vterm_state()*
+uv.tty_set_vterm_state({state})                       *uv.tty_set_vterm_state()*
     Parameters:
     - {state}: string
 
@@ -1792,7 +1790,7 @@ uv.tty_set_vterm_state({state}) *uv.tty_set_vterm_state()*
 
     Returns: none
 
-uv.tty_get_vterm_state() *uv.tty_get_vterm_state()*
+uv.tty_get_vterm_state()                              *uv.tty_get_vterm_state()*
     Get the current state of whether console virtual terminal sequences are
     handled by libuv or the console. The return value is "supported" or
     "unsupported".
@@ -1802,12 +1800,12 @@ uv.tty_get_vterm_state() *uv.tty_get_vterm_state()*
     Returns: string or |luv-fail|
 
 ==============================================================================
-uv_udp_t - UDP handle *uv_udp_t*
+uv_udp_t - UDP handle                                                 *uv_udp_t*
     |uv_handle_t| functions also apply.
 
     UDP handles encapsulate UDP communication for both clients and servers.
 
-uv.new_udp([{flags}]) *uv.new_udp()*
+uv.new_udp([{flags}])                                             *uv.new_udp()*
     Parameters:
     - {flags}: table or nil
       - {family}: string or nil
@@ -1831,19 +1829,19 @@ uv.new_udp([{flags}]) *uv.new_udp()*
 
     Returns: |uv_udp_t| userdata or |luv-fail|
 
-uv.udp_get_send_queue_size() *uv.udp_get_send_queue_size()*
+uv.udp_get_send_queue_size()                      *uv.udp_get_send_queue_size()*
     > method form `udp:get_send_queue_size()`
     Returns the handle's send queue size.
 
     Returns: integer
 
-uv.udp_get_send_queue_count() *uv.udp_get_send_queue_count()*
+uv.udp_get_send_queue_count()                    *uv.udp_get_send_queue_count()*
     > method form `udp:get_send_queue_count()`
     Returns the handle's send queue count.
 
     Returns: integer
 
-uv.udp_open({udp}, {fd}) *uv.udp_open()*
+uv.udp_open({udp}, {fd})                                         *uv.udp_open()*
     > method form `udp:open(fd)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1863,7 +1861,7 @@ uv.udp_open({udp}, {fd}) *uv.udp_open()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_bind({udp}, {host}, {port}, [{flags}]) *uv.udp_bind()*
+uv.udp_bind({udp}, {host}, {port}, [{flags}])                    *uv.udp_bind()*
     > method form `udp:bind(host, port, [flags])`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1878,7 +1876,7 @@ uv.udp_bind({udp}, {host}, {port}, [{flags}]) *uv.udp_bind()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_getsockname({udp}) *uv.udp_getsockname()*
+uv.udp_getsockname({udp})                                 *uv.udp_getsockname()*
     > method form `udp:getsockname()`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1890,7 +1888,7 @@ uv.udp_getsockname({udp}) *uv.udp_getsockname()*
     - family : string
     - port : integer
 
-uv.udp_getpeername({udp}) *uv.udp_getpeername()*
+uv.udp_getpeername({udp})                                 *uv.udp_getpeername()*
     > method form `udp:getpeername()`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1902,7 +1900,8 @@ uv.udp_getpeername({udp}) *uv.udp_getpeername()*
     - family : string
     - port : integer
 
-uv.udp_set_membership({udp}, {multicast_addr}, {interface_addr}, {membership}) *uv.udp_set_membership()*
+                                                       *uv.udp_set_membership()*
+uv.udp_set_membership({udp}, {multicast_addr}, {interface_addr}, {membership})
     > method form `udp:set_membership(multicast_addr, interface_addr, membership)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1916,7 +1915,8 @@ uv.udp_set_membership({udp}, {multicast_addr}, {interface_addr}, {membership}) *
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_source_membership({udp}, {multicast_addr}, {interface_addr}, {source_addr}, {membership}) *uv.udp_set_source_membership()*
+                                                *uv.udp_set_source_membership()*
+uv.udp_set_source_membership({udp}, {multicast_addr}, {interface_addr}, {source_addr}, {membership})
     > method form `udp:set_source_membership(multicast_addr, interface_addr, source_addr, membership)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1932,7 +1932,7 @@ uv.udp_set_source_membership({udp}, {multicast_addr}, {interface_addr}, {source_
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_multicast_loop({udp}, {on}) *uv.udp_set_multicast_loop()*
+uv.udp_set_multicast_loop({udp}, {on})             *uv.udp_set_multicast_loop()*
     > method form `udp:set_multicast_loop(on)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1943,7 +1943,7 @@ uv.udp_set_multicast_loop({udp}, {on}) *uv.udp_set_multicast_loop()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_multicast_ttl({udp}, {ttl}) *uv.udp_set_multicast_ttl()*
+uv.udp_set_multicast_ttl({udp}, {ttl})              *uv.udp_set_multicast_ttl()*
     > method form `udp:set_multicast_ttl(ttl)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1955,7 +1955,8 @@ uv.udp_set_multicast_ttl({udp}, {ttl}) *uv.udp_set_multicast_ttl()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_multicast_interface({udp}, {interface_addr}) *uv.udp_set_multicast_interface()*
+                                              *uv.udp_set_multicast_interface()*
+uv.udp_set_multicast_interface({udp}, {interface_addr})
     > method form `udp:set_multicast_interface(interface_addr)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1965,7 +1966,7 @@ uv.udp_set_multicast_interface({udp}, {interface_addr}) *uv.udp_set_multicast_in
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_broadcast({udp}, {on}) *uv.udp_set_broadcast()*
+uv.udp_set_broadcast({udp}, {on})                       *uv.udp_set_broadcast()*
     > method form `udp:set_broadcast(on)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1975,7 +1976,7 @@ uv.udp_set_broadcast({udp}, {on}) *uv.udp_set_broadcast()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_set_ttl({udp}, {ttl}) *uv.udp_set_ttl()*
+uv.udp_set_ttl({udp}, {ttl})                                  *uv.udp_set_ttl()*
     > method form `udp:set_ttl(ttl)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -1987,7 +1988,7 @@ uv.udp_set_ttl({udp}, {ttl}) *uv.udp_set_ttl()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_send({udp}, {data}, {host}, {port}, {callback}) *uv.udp_send()*
+uv.udp_send({udp}, {data}, {host}, {port}, {callback})           *uv.udp_send()*
     > method form `udp:send(data, host, port, callback)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -2003,7 +2004,7 @@ uv.udp_send({udp}, {data}, {host}, {port}, {callback}) *uv.udp_send()*
 
     Returns: uv_udp_send_t userdata or |luv-fail|
 
-uv.udp_try_send({udp}, {data}, {host}, {port}) *uv.udp_try_send()*
+uv.udp_try_send({udp}, {data}, {host}, {port})               *uv.udp_try_send()*
     > method form `udp:try_send(data, host, port)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -2016,7 +2017,7 @@ uv.udp_try_send({udp}, {data}, {host}, {port}) *uv.udp_try_send()*
 
     Returns: integer or |luv-fail|
 
-uv.udp_recv_start({udp}, {callback}) *uv.udp_recv_start()*
+uv.udp_recv_start({udp}, {callback})                       *uv.udp_recv_start()*
     > method form `udp:recv_start(callback)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -2037,7 +2038,7 @@ uv.udp_recv_start({udp}, {callback}) *uv.udp_recv_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_recv_stop({udp}) *uv.udp_recv_stop()*
+uv.udp_recv_stop({udp})                                     *uv.udp_recv_stop()*
     > method form `udp:recv_stop()`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -2046,7 +2047,7 @@ uv.udp_recv_stop({udp}) *uv.udp_recv_stop()*
 
     Returns: 0 or |luv-fail|
 
-uv.udp_connect({udp}, {host}, {port}) *uv.udp_connect()*
+uv.udp_connect({udp}, {host}, {port})                         *uv.udp_connect()*
     > method form `udp:connect(host, port)`
     Parameters:
     - {udp}: |uv_udp_t| userdata
@@ -2063,14 +2064,14 @@ uv.udp_connect({udp}, {host}, {port}) *uv.udp_connect()*
     Returns: 0 or |luv-fail|
 
 ==============================================================================
-uv_fs_event_t - FS Event handle *uv_fs_event_t*
+uv_fs_event_t - FS Event handle                                  *uv_fs_event_t*
     > |uv_handle_t| functions also apply.
 
     FS Event handles allow the user to monitor a given path for changes, for
     example, if the file was renamed or there was a generic change in it. This
     handle uses the best backend for the job on each platform.
 
-uv.new_fs_event() *uv.new_fs_event()*
+uv.new_fs_event()                                            *uv.new_fs_event()*
     Creates and initializes a new |uv_fs_event_t|. Returns the Lua userdata
     wrapping it.
 
@@ -2097,27 +2098,27 @@ uv.fs_event_start({fs_event}, {path}, {flags}, {callback}) *uv.fs_event_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.fs_event_stop() *uv.fs_event_stop()*
+uv.fs_event_stop()                                          *uv.fs_event_stop()*
     > method form `fs_event:stop()`
     Stop the handle, the callback will no longer be called.
 
     Returns: 0 or |luv-fail|
 
-uv.fs_event_getpath() *uv.fs_event_getpath()*
+uv.fs_event_getpath()                                    *uv.fs_event_getpath()*
     > method form `fs_event:getpath()`
     Get the path being monitored by the handle.
 
     Returns: string or |luv-fail|
 
 ==============================================================================
-uv_fs_poll_t - FS Poll handle *uv_fs_poll_t*
+uv_fs_poll_t - FS Poll handle                                     *uv_fs_poll_t*
     > |uv_handle_t| functions also apply.
 
     FS Poll handles allow the user to monitor a given path for changes. Unlike
     |uv_fs_event_t|, fs poll handles use `stat` to detect when a file has
     changed so they can work on file systems where fs event handles can't.
 
-uv.new_fs_poll() *uv.new_fs_poll()*
+uv.new_fs_poll()                                              *uv.new_fs_poll()*
     Creates and initializes a new |uv_fs_poll_t|. Returns the Lua userdata
     wrapping it.
 
@@ -2141,20 +2142,20 @@ uv.fs_poll_start({fs_poll}, {path}, {interval}, {callback}) *uv.fs_poll_start()*
 
     Returns: 0 or |luv-fail|
 
-uv.fs_poll_stop() *uv.fs_poll_stop()*
+uv.fs_poll_stop()                                            *uv.fs_poll_stop()*
     > method form `fs_poll:stop()`
     Stop the handle, the callback will no longer be called.
 
     Returns: 0 or |luv-fail|
 
-uv.fs_poll_getpath() *uv.fs_poll_getpath()*
+uv.fs_poll_getpath()                                      *uv.fs_poll_getpath()*
     > method form `fs_poll:getpath()`
     Get the path being monitored by the handle.
 
     Returns: string or |luv-fail|
 
 ==============================================================================
-File system operations *luv-file-system-operations*
+File system operations                              *luv-file-system-operations*
 
     Most file system functions can operate synchronously or asynchronously.
     When a synchronous version is called (by omitting a callback), the
@@ -2202,7 +2203,7 @@ File system operations *luv-file-system-operations*
       print("asynchronous read", data)
     end)
 <
-uv.fs_close({fd}, [{callback}]) *uv.fs_close()*
+uv.fs_close({fd}, [{callback}])                                  *uv.fs_close()*
     Parameters:
     - {fd}: integer
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2214,7 +2215,7 @@ uv.fs_close({fd}, [{callback}]) *uv.fs_close()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_open({path}, {flags}, {mode}, [{callback}]) *uv.fs_open()*
+uv.fs_open({path}, {flags}, {mode}, [{callback}])                 *uv.fs_open()*
     Parameters:
     - {path}: string
     - {flags}: string or integer
@@ -2234,7 +2235,7 @@ uv.fs_open({path}, {flags}, {mode}, [{callback}]) *uv.fs_open()*
     opened in binary mode. Because of this, the `O_BINARY` and `O_TEXT` flags are
     not supported.
 
-uv.fs_read({fd}, {size}, [{offset}], [{callback}]) *uv.fs_read()*
+uv.fs_read({fd}, {size}, [{offset}], [{callback}])                *uv.fs_read()*
     Parameters:
     - {fd}: integer
     - {size}: integer
@@ -2254,7 +2255,7 @@ uv.fs_read({fd}, {size}, [{offset}], [{callback}]) *uv.fs_read()*
     Returns (sync version): string or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_unlink({path}, [{callback}]) *uv.fs_unlink()*
+uv.fs_unlink({path}, [{callback}])                              *uv.fs_unlink()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2266,7 +2267,7 @@ uv.fs_unlink({path}, [{callback}]) *uv.fs_unlink()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_write({fd}, {data}, [{offset}], [{callback}]) *uv.fs_write()*
+uv.fs_write({fd}, {data}, [{offset}], [{callback}])              *uv.fs_write()*
     Parameters:
     - {fd}: integer
     - {data}: |luv-buffer|
@@ -2286,7 +2287,7 @@ uv.fs_write({fd}, {data}, [{offset}], [{callback}]) *uv.fs_write()*
     Returns (sync version): integer or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_mkdir({path}, {mode}, [{callback}]) *uv.fs_mkdir()*
+uv.fs_mkdir({path}, {mode}, [{callback}])                        *uv.fs_mkdir()*
     Parameters:
     - {path}: string
     - {mode}: integer
@@ -2299,7 +2300,7 @@ uv.fs_mkdir({path}, {mode}, [{callback}]) *uv.fs_mkdir()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_mkdtemp({template}, [{callback}]) *uv.fs_mkdtemp()*
+uv.fs_mkdtemp({template}, [{callback}])                        *uv.fs_mkdtemp()*
     Parameters:
     - {template}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2311,7 +2312,7 @@ uv.fs_mkdtemp({template}, [{callback}]) *uv.fs_mkdtemp()*
     Returns (sync version): string or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_mkstemp({template}, [{callback}]) *uv.fs_mkstemp()*
+uv.fs_mkstemp({template}, [{callback}])                        *uv.fs_mkstemp()*
     Parameters:
     - {template}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2324,7 +2325,7 @@ uv.fs_mkstemp({template}, [{callback}]) *uv.fs_mkstemp()*
     Returns (sync version): integer, string or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_rmdir({path}, [{callback}]) *uv.fs_rmdir()*
+uv.fs_rmdir({path}, [{callback}])                                *uv.fs_rmdir()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2336,7 +2337,7 @@ uv.fs_rmdir({path}, [{callback}]) *uv.fs_rmdir()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_scandir({path}, [{callback}]) *uv.fs_scandir()*
+uv.fs_scandir({path}, [{callback}])                            *uv.fs_scandir()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable|
@@ -2353,7 +2354,7 @@ uv.fs_scandir({path}, [{callback}]) *uv.fs_scandir()*
 
     Returns: uv_fs_t userdata or |luv-fail|
 
-uv.fs_scandir_next({fs}) *uv.fs_scandir_next()*
+uv.fs_scandir_next({fs})                                  *uv.fs_scandir_next()*
     Parameters:
     - {fs}: uv_fs_t userdata
 
@@ -2366,7 +2367,7 @@ uv.fs_scandir_next({fs}) *uv.fs_scandir_next()*
 
     Returns: string, string or nil or |luv-fail|
 
-uv.fs_stat({path}, [{callback}]) *uv.fs_stat()*
+uv.fs_stat({path}, [{callback}])                                  *uv.fs_stat()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2404,7 +2405,7 @@ uv.fs_stat({path}, [{callback}]) *uv.fs_stat()*
 
     Returns (async version): uv_fs_t userdata
 
-uv.fs_fstat({fd}, [{callback}]) *uv.fs_fstat()*
+uv.fs_fstat({fd}, [{callback}])                                  *uv.fs_fstat()*
     Parameters:
     - {fd}: integer
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2416,7 +2417,7 @@ uv.fs_fstat({fd}, [{callback}]) *uv.fs_fstat()*
     Returns (sync version): table or |luv-fail| (see |uv.fs_stat()|)
     Returns (async version): uv_fs_t userdata
 
-uv.fs_lstat({path}, [{callback}]) *uv.fs_lstat()*
+uv.fs_lstat({path}, [{callback}])                                *uv.fs_lstat()*
     Parameters:
     - {fd}: integer
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2428,7 +2429,7 @@ uv.fs_lstat({path}, [{callback}]) *uv.fs_lstat()*
     Returns (sync version): table or |luv-fail| (see |uv.fs_stat()|)
     Returns (async version): uv_fs_t userdata
 
-uv.fs_rename({path}, {new_path}, [{callback}]) *uv.fs_rename()*
+uv.fs_rename({path}, {new_path}, [{callback}])                  *uv.fs_rename()*
     Parameters:
     - {path}: string
     - {new_path}: string
@@ -2441,7 +2442,7 @@ uv.fs_rename({path}, {new_path}, [{callback}]) *uv.fs_rename()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_fsync({fd}, [{callback}]) *uv.fs_fsync()*
+uv.fs_fsync({fd}, [{callback}])                                  *uv.fs_fsync()*
     Parameters:
     - {fd}: integer
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2453,7 +2454,7 @@ uv.fs_fsync({fd}, [{callback}]) *uv.fs_fsync()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_fdatasync({fd}, [{callback}]) *uv.fs_fdatasync()*
+uv.fs_fdatasync({fd}, [{callback}])                          *uv.fs_fdatasync()*
     Parameters:
     - {fd}: integer
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2465,7 +2466,7 @@ uv.fs_fdatasync({fd}, [{callback}]) *uv.fs_fdatasync()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_ftruncate({fd}, {offset}, [{callback}]) *uv.fs_ftruncate()*
+uv.fs_ftruncate({fd}, {offset}, [{callback}])                *uv.fs_ftruncate()*
     Parameters:
     - {fd}: integer
     - {offset}: integer
@@ -2478,7 +2479,8 @@ uv.fs_ftruncate({fd}, {offset}, [{callback}]) *uv.fs_ftruncate()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_sendfile({out_fd}, {in_fd}, {in_offset}, {size}, [{callback}]) *uv.fs_sendfile()*
+                                                              *uv.fs_sendfile()*
+uv.fs_sendfile({out_fd}, {in_fd}, {in_offset}, {size}, [{callback}])
     Parameters:
     - {out_fd}: integer
     - {in_fd}: integer
@@ -2493,7 +2495,7 @@ uv.fs_sendfile({out_fd}, {in_fd}, {in_offset}, {size}, [{callback}]) *uv.fs_send
     Returns (sync version): integer or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_access({path}, {mode}, [{callback}]) *uv.fs_access()*
+uv.fs_access({path}, {mode}, [{callback}])                      *uv.fs_access()*
     Parameters:
     - {path}: string
     - {mode}: integer
@@ -2508,7 +2510,7 @@ uv.fs_access({path}, {mode}, [{callback}]) *uv.fs_access()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_chmod({path}, {mode}, [{callback}]) *uv.fs_chmod()*
+uv.fs_chmod({path}, {mode}, [{callback}])                        *uv.fs_chmod()*
     Parameters:
     - {path}: string
     - {mode}: integer
@@ -2521,7 +2523,7 @@ uv.fs_chmod({path}, {mode}, [{callback}]) *uv.fs_chmod()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_fchmod({fd}, {mode}, [{callback}]) *uv.fs_fchmod()*
+uv.fs_fchmod({fd}, {mode}, [{callback}])                        *uv.fs_fchmod()*
     Parameters:
     - {fd}: integer
     - {mode}: integer
@@ -2534,7 +2536,7 @@ uv.fs_fchmod({fd}, {mode}, [{callback}]) *uv.fs_fchmod()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_utime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_utime()*
+uv.fs_utime({path}, {atime}, {mtime}, [{callback}])              *uv.fs_utime()*
     Parameters:
     - {path}: string
     - {atime}: number
@@ -2548,7 +2550,7 @@ uv.fs_utime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_utime()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_futime({fd}, {atime}, {mtime}, [{callback}]) *uv.fs_futime()*
+uv.fs_futime({fd}, {atime}, {mtime}, [{callback}])              *uv.fs_futime()*
     Parameters:
     - {fd}: integer
     - {atime}: number
@@ -2562,7 +2564,7 @@ uv.fs_futime({fd}, {atime}, {mtime}, [{callback}]) *uv.fs_futime()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_lutime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_lutime()*
+uv.fs_lutime({path}, {atime}, {mtime}, [{callback}])            *uv.fs_lutime()*
     Parameters:
     - {path}: string
     - {atime}: number
@@ -2576,7 +2578,7 @@ uv.fs_lutime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_lutime()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_link({path}, {new_path}, [{callback}]) *uv.fs_link()*
+uv.fs_link({path}, {new_path}, [{callback}])                      *uv.fs_link()*
     Parameters:
     - {path}: string
     - {new_path}: string
@@ -2589,7 +2591,7 @@ uv.fs_link({path}, {new_path}, [{callback}]) *uv.fs_link()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_symlink({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_symlink()*
+uv.fs_symlink({path}, {new_path}, [{flags}], [{callback}])     *uv.fs_symlink()*
     Parameters:
     - {path}: string
     - {new_path}: string
@@ -2606,7 +2608,7 @@ uv.fs_symlink({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_symlink()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_readlink({path}, [{callback}]) *uv.fs_readlink()*
+uv.fs_readlink({path}, [{callback}])                          *uv.fs_readlink()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2618,7 +2620,7 @@ uv.fs_readlink({path}, [{callback}]) *uv.fs_readlink()*
     Returns (sync version): string or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_realpath({path}, [{callback}]) *uv.fs_realpath()*
+uv.fs_realpath({path}, [{callback}])                          *uv.fs_realpath()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2630,7 +2632,7 @@ uv.fs_realpath({path}, [{callback}]) *uv.fs_realpath()*
     Returns (sync version): string or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_chown({path}, {uid}, {gid}, [{callback}]) *uv.fs_chown()*
+uv.fs_chown({path}, {uid}, {gid}, [{callback}])                  *uv.fs_chown()*
     Parameters:
     - {path}: string
     - {uid}: integer
@@ -2644,7 +2646,7 @@ uv.fs_chown({path}, {uid}, {gid}, [{callback}]) *uv.fs_chown()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_fchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_fchown()*
+uv.fs_fchown({fd}, {uid}, {gid}, [{callback}])                  *uv.fs_fchown()*
     Parameters:
     - {fd}: integer
     - {uid}: integer
@@ -2658,7 +2660,7 @@ uv.fs_fchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_fchown()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_lchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_lchown()*
+uv.fs_lchown({fd}, {uid}, {gid}, [{callback}])                  *uv.fs_lchown()*
     Parameters:
     - {fd}: integer
     - {uid}: integer
@@ -2672,7 +2674,7 @@ uv.fs_lchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_lchown()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_copyfile({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_copyfile()*
+uv.fs_copyfile({path}, {new_path}, [{flags}], [{callback}])   *uv.fs_copyfile()*
     Parameters:
     - {path}: string
     - {new_path}: string
@@ -2690,7 +2692,7 @@ uv.fs_copyfile({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_copyfile()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_opendir({path}, [{callback}, [{entries}]]) *uv.fs_opendir()*
+uv.fs_opendir({path}, [{callback}, [{entries}]])               *uv.fs_opendir()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2705,7 +2707,7 @@ uv.fs_opendir({path}, [{callback}, [{entries}]]) *uv.fs_opendir()*
     Returns (sync version): uv_dir_t userdata or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_readdir({dir}, [{callback}]) *uv.fs_readdir()*
+uv.fs_readdir({dir}, [{callback}])                             *uv.fs_readdir()*
     > method form `dir:readdir([callback])`
     Parameters:
     - {dir}: uv_dir_t userdata
@@ -2725,7 +2727,7 @@ uv.fs_readdir({dir}, [{callback}]) *uv.fs_readdir()*
 
     Returns (async version): uv_fs_t userdata
 
-uv.fs_closedir({dir}, [{callback}]) *uv.fs_closedir()*
+uv.fs_closedir({dir}, [{callback}])                           *uv.fs_closedir()*
     > method form `dir:closedir([callback])`
     Parameters:
     - {dir}: uv_dir_t userdata
@@ -2738,7 +2740,7 @@ uv.fs_closedir({dir}, [{callback}]) *uv.fs_closedir()*
     Returns (sync version): boolean or |luv-fail|
     Returns (async version): uv_fs_t userdata
 
-uv.fs_statfs({path}, [{callback}]) *uv.fs_statfs()*
+uv.fs_statfs({path}, [{callback}])                              *uv.fs_statfs()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
@@ -2757,7 +2759,7 @@ uv.fs_statfs({path}, [{callback}]) *uv.fs_statfs()*
     - ffree : integer
 
 ==============================================================================
-Thread pool work scheduling *luv-thread-pool-work-scheduling*
+Thread pool work scheduling                    *luv-thread-pool-work-scheduling*
 
     Libuv provides a threadpool which can be used to run user code and get
     notified in the loop thread. This threadpool is internally used to run all
@@ -2777,7 +2779,7 @@ Thread pool work scheduling *luv-thread-pool-work-scheduling*
 
     -- output: "The result is: 3"
 <
-uv.new_work({work_callback}, {after_work_callback}) *uv.new_work()*
+uv.new_work({work_callback}, {after_work_callback})              *uv.new_work()*
 
     Parameters:
     - {work_callback}: function
@@ -2790,7 +2792,7 @@ uv.new_work({work_callback}, {after_work_callback}) *uv.new_work()*
 
     Returns: luv_work_ctx_t userdata
 
-uv.queue_work({work_ctx}, {...}) *uv.queue_work()*
+uv.queue_work({work_ctx}, {...})                               *uv.queue_work()*
     > method form `work_ctx:queue(...)`
     Parameters:
     - {work_ctx}: luv_work_ctx_t userdata
@@ -2804,9 +2806,9 @@ uv.queue_work({work_ctx}, {...}) *uv.queue_work()*
     Returns: boolean or |luv-fail|
 
 ==============================================================================
-DNS utility functions *luv-dns-utility-functions*
+DNS utility functions                                *luv-dns-utility-functions*
 
-uv.getaddrinfo({host}, {service}, [{hints}, [{callback}]]) *uv.getaddrinfo()*
+uv.getaddrinfo({host}, {service}, [{hints}, [{callback}]])    *uv.getaddrinfo()*
     Parameters:
     - {host}: string or nil
     - {service}: string or nil
@@ -2846,7 +2848,7 @@ uv.getaddrinfo({host}, {service}, [{hints}, [{callback}]]) *uv.getaddrinfo()*
 
     Returns (async version): uv_getaddrinfo_t userdata or |luv-fail|
 
-uv.getnameinfo({address}, [{callback}]) *uv.getnameinfo()*
+uv.getnameinfo({address}, [{callback}])                       *uv.getnameinfo()*
     Parameters:
     - {address}: table
       - {ip}: string or nil
@@ -2871,7 +2873,7 @@ Threading and synchronization utilities *luv-threading-and-synchronization-utili
     Libuv provides cross-platform implementations for multiple threading an
     synchronization primitives. The API largely follows the pthreads API.
 
-uv.new_thread([{options}], {entry}, {...}) *uv.new_thread()*
+uv.new_thread([{options}], {entry}, {...})                     *uv.new_thread()*
     Parameters:
     - {options}: table or nil
       - {stack_size}: integer or nil
@@ -2887,7 +2889,7 @@ uv.new_thread([{options}], {entry}, {...}) *uv.new_thread()*
 
     Returns: luv_thread_t userdata or |luv-fail|
 
-uv.thread_equal({thread}, {other_thread}) *uv.thread_equal()*
+uv.thread_equal({thread}, {other_thread})                    *uv.thread_equal()*
     > method form `thread:equal(other_thread)`
     Parameters:
     - {thread}: luv_thread_t userdata
@@ -2898,12 +2900,12 @@ uv.thread_equal({thread}, {other_thread}) *uv.thread_equal()*
 
     Returns: boolean
 
-uv.thread_self() *uv.thread_self()*
+uv.thread_self()                                              *uv.thread_self()*
     Returns the handle for the thread in which this is called.
 
     Returns: luv_thread_t
 
-uv.thread_join({thread}) *uv.thread_join()*
+uv.thread_join({thread})                                      *uv.thread_join()*
     > method form `thread:join()`
     Parameters:
     - {thread}: luv_thread_t userdata
@@ -2912,7 +2914,7 @@ uv.thread_join({thread}) *uv.thread_join()*
 
     Returns: boolean or |luv-fail|
 
-uv.sleep({msec}) *uv.sleep()*
+uv.sleep({msec})                                                    *uv.sleep()*
     Parameters:
     - {msec}: integer
 
@@ -2921,19 +2923,19 @@ uv.sleep({msec}) *uv.sleep()*
     Returns: Nothing.
 
 ==============================================================================
-Miscellaneous utilities *luv-miscellaneous-utilities*
+Miscellaneous utilities                            *luv-miscellaneous-utilities*
 
-uv.exepath() *uv.exepath()*
+uv.exepath()                                                      *uv.exepath()*
     Returns the executable path.
 
     Returns: string or |luv-fail|
 
-uv.cwd() *uv.cwd()*
+uv.cwd()                                                              *uv.cwd()*
     Returns the current working directory.
 
     Returns: string or |luv-fail|
 
-uv.chdir({cwd}) *uv.chdir()*
+uv.chdir({cwd})                                                     *uv.chdir()*
     Parameters:
     - {cwd}: string
 
@@ -2941,12 +2943,12 @@ uv.chdir({cwd}) *uv.chdir()*
 
     Returns: 0 or |luv-fail|
 
-uv.get_process_title() *uv.get_process_title()*
+uv.get_process_title()                                  *uv.get_process_title()*
     Returns the title of the current process.
 
     Returns: string or |luv-fail|
 
-uv.set_process_title({title}) *uv.set_process_title()*
+uv.set_process_title({title})                           *uv.set_process_title()*
     Parameters:
     - {title}: string
 
@@ -2954,17 +2956,17 @@ uv.set_process_title({title}) *uv.set_process_title()*
 
     Returns: 0 or |luv-fail|
 
-uv.get_total_memory() *uv.get_total_memory()*
+uv.get_total_memory()                                    *uv.get_total_memory()*
     Returns the current total system memory in bytes.
 
     Returns: number
 
-uv.get_free_memory() *uv.get_free_memory()*
+uv.get_free_memory()                                      *uv.get_free_memory()*
     Returns the current free system memory in bytes.
 
     Returns: number
 
-uv.get_constrained_memory() *uv.get_constrained_memory()*
+uv.get_constrained_memory()                        *uv.get_constrained_memory()*
     Gets the amount of memory available to the process in bytes based on
     limits imposed by the OS. If there is no such constraint, or the
     constraint is unknown, 0 is returned. Note that it is not unusual for this
@@ -2972,12 +2974,12 @@ uv.get_constrained_memory() *uv.get_constrained_memory()*
 
     Returns: number
 
-uv.resident_set_memory() *uv.resident_set_memory()*
+uv.resident_set_memory()                              *uv.resident_set_memory()*
     Returns the resident set size (RSS) for the current process.
 
     Returns: integer or |luv-fail|
 
-uv.getrusage() *uv.getrusage()*
+uv.getrusage()                                                  *uv.getrusage()*
     Returns the resource usage.
 
     Returns: table or |luv-fail|
@@ -3002,7 +3004,7 @@ uv.getrusage() *uv.getrusage()*
     - nvcsw : integer (voluntary context switches)
     - nivcsw : integer (involuntary context switches)
 
-uv.cpu_info() *uv.cpu_info()*
+uv.cpu_info()                                                    *uv.cpu_info()*
     Returns information about the CPU(s) on the system as a table of tables
     for each CPU found.
 
@@ -3017,24 +3019,24 @@ uv.cpu_info() *uv.cpu_info()*
         - idle : number
         - irq : number
 
-uv.getpid() *uv.getpid()*
+uv.getpid()                                                        *uv.getpid()*
     Deprecated: Please use |uv.os_getpid()| instead.
 
-uv.getuid() *uv.getuid()*
+uv.getuid()                                                        *uv.getuid()*
     Returns the user ID of the process.
 
     Returns: integer
 
     Note: This is not a libuv function and is not supported on Windows.
 
-uv.getgid() *uv.getgid()*
+uv.getgid()                                                        *uv.getgid()*
     Returns the group ID of the process.
 
     Returns: integer
 
     Note: This is not a libuv function and is not supported on Windows.
 
-uv.setuid({id}) *uv.setuid()*
+uv.setuid({id})                                                    *uv.setuid()*
     Parameters:
     - {id}: integer
 
@@ -3044,7 +3046,7 @@ uv.setuid({id}) *uv.setuid()*
 
     Note: This is not a libuv function and is not supported on Windows.
 
-uv.setgid({id}) *uv.setgid()*
+uv.setgid({id})                                                    *uv.setgid()*
     Parameters:
     - {id}: integer
 
@@ -3054,7 +3056,7 @@ uv.setgid({id}) *uv.setgid()*
 
     Note: This is not a libuv function and is not supported on Windows.
 
-uv.hrtime() *uv.hrtime()*
+uv.hrtime()                                                        *uv.hrtime()*
     Returns a current high-resolution time in nanoseconds as a number. This is
     relative to an arbitrary time in the past. It is not related to the time
     of day and therefore not subject to clock drift. The primary use is for
@@ -3062,12 +3064,12 @@ uv.hrtime() *uv.hrtime()*
 
     Returns: number
 
-uv.uptime() *uv.uptime()*
+uv.uptime()                                                        *uv.uptime()*
     Returns the current system uptime in seconds.
 
     Returns: number or |luv-fail|
 
-uv.print_all_handles() *uv.print_all_handles()*
+uv.print_all_handles()                                  *uv.print_all_handles()*
     Prints all handles associated with the main loop to stderr. The format is
     `[flags] handle-type handle-address`. Flags are `R` for referenced, `A`
     for active and `I` for internal.
@@ -3079,7 +3081,7 @@ uv.print_all_handles() *uv.print_all_handles()*
     Warning: This function is meant for ad hoc debugging, there are no API/ABI
     stability guarantees.
 
-uv.print_active_handles() *uv.print_active_handles()*
+uv.print_active_handles()                            *uv.print_active_handles()*
     The same as |uv.print_all_handles()| except only active handles are printed.
 
     Returns: Nothing.
@@ -3089,7 +3091,7 @@ uv.print_active_handles() *uv.print_active_handles()*
     Warning: This function is meant for ad hoc debugging, there are no API/ABI
     stability guarantees.
 
-uv.guess_handle({fd}) *uv.guess_handle()*
+uv.guess_handle({fd})                                        *uv.guess_handle()*
     Parameters:
     - {fd}: integer
 
@@ -3099,13 +3101,13 @@ uv.guess_handle({fd}) *uv.guess_handle()*
 
     Returns: string
 
-uv.gettimeofday() *uv.gettimeofday()*
+uv.gettimeofday()                                            *uv.gettimeofday()*
     Cross-platform implementation of gettimeofday(2). Returns the seconds and
     microseconds of a unix time as a pair.
 
     Returns: integer, integer or fail
 
-uv.interface_addresses() *uv.interface_addresses()*
+uv.interface_addresses()                              *uv.interface_addresses()*
     Returns address information about the network interfaces on the system in
     a table. Each table key is the name of the interface while each associated
     value is an array of address information where fields are ip, family,
@@ -3119,7 +3121,7 @@ uv.interface_addresses() *uv.interface_addresses()*
       - internal : boolean
       - mac : string
 
-uv.if_indextoname({ifindex}) *uv.if_indextoname()*
+uv.if_indextoname({ifindex})                               *uv.if_indextoname()*
     Parameters:
     - {ifindex}: integer
 
@@ -3127,7 +3129,7 @@ uv.if_indextoname({ifindex}) *uv.if_indextoname()*
 
     Returns: string or |luv-fail|
 
-uv.if_indextoiid({ifindex}) *uv.if_indextoiid()*
+uv.if_indextoiid({ifindex})                                 *uv.if_indextoiid()*
     Parameters:
     - {ifindex}: integer
 
@@ -3137,12 +3139,12 @@ uv.if_indextoiid({ifindex}) *uv.if_indextoiid()*
 
     Returns: string or |luv-fail|
 
-uv.loadavg() *uv.loadavg()*
+uv.loadavg()                                                      *uv.loadavg()*
     Returns the load average as a triad. Not supported on Windows.
 
     Returns: number, number, number
 
-uv.os_uname() *uv.os_uname()*
+uv.os_uname()                                                    *uv.os_uname()*
     Returns system information.
 
     Returns: table
@@ -3151,12 +3153,12 @@ uv.os_uname() *uv.os_uname()*
     - version : string
     - machine : string
 
-uv.os_gethostname() *uv.os_gethostname()*
+uv.os_gethostname()                                        *uv.os_gethostname()*
     Returns the hostname.
 
     Returns: string
 
-uv.os_getenv({name}, [{size}]) *uv.os_getenv()*
+uv.os_getenv({name}, [{size}])                                  *uv.os_getenv()*
     Parameters:
     - {name}: string
     - {size}: integer (default = LUAL_BUFFERSIZE)
@@ -3171,7 +3173,7 @@ uv.os_getenv({name}, [{size}]) *uv.os_getenv()*
 
     Warning: This function is not thread safe.
 
-uv.os_setenv({name}, {value}) *uv.os_setenv()*
+uv.os_setenv({name}, {value})                                   *uv.os_setenv()*
     Parameters:
     - {name}: string
     - {value}: string
@@ -3183,12 +3185,12 @@ uv.os_setenv({name}, {value}) *uv.os_setenv()*
 
     Warning: This function is not thread safe.
 
-uv.os_unsetenv() *uv.os_unsetenv()*
+uv.os_unsetenv()                                              *uv.os_unsetenv()*
     Returns: boolean or |luv-fail|
 
     Warning: This function is not thread safe.
 
-uv.os_environ() *uv.os_environ()*
+uv.os_environ()                                                *uv.os_environ()*
     Returns all environmental variables as a dynamic table of names associated
     with their corresponding values.
 
@@ -3196,17 +3198,17 @@ uv.os_environ() *uv.os_environ()*
 
     Warning: This function is not thread safe.
 
-uv.os_homedir() *uv.os_homedir()*
+uv.os_homedir()                                                *uv.os_homedir()*
     Returns: string or |luv-fail|
 
     Warning: This function is not thread safe.
 
-uv.os_tmpdir() *uv.os_tmpdir()*
+uv.os_tmpdir()                                                  *uv.os_tmpdir()*
     Returns: string or |luv-fail|
 
     Warning: This function is not thread safe.
 
-uv.os_get_passwd() *uv.os_get_passwd()*
+uv.os_get_passwd()                                          *uv.os_get_passwd()*
     Returns password file information.
 
     Returns: table
@@ -3216,17 +3218,17 @@ uv.os_get_passwd() *uv.os_get_passwd()*
     - shell : string
     - homedir : string
 
-uv.os_getpid() *uv.os_getpid()*
+uv.os_getpid()                                                  *uv.os_getpid()*
     Returns the current process ID.
 
     Returns: number
 
-uv.os_getppid() *uv.os_getppid()*
+uv.os_getppid()                                                *uv.os_getppid()*
     Returns the parent process ID.
 
     Returns: number
 
-uv.os_getpriority({pid}) *uv.os_getpriority()*
+uv.os_getpriority({pid})                                   *uv.os_getpriority()*
     Parameters:
     - {pid}: integer
 
@@ -3234,7 +3236,7 @@ uv.os_getpriority({pid}) *uv.os_getpriority()*
 
     Returns: number or |luv-fail|
 
-uv.os_setpriority({pid}, {priority}) *uv.os_setpriority()*
+uv.os_setpriority({pid}, {priority})                       *uv.os_setpriority()*
     Parameters:
     - {pid}: integer
     - {priority}: integer
@@ -3244,7 +3246,7 @@ uv.os_setpriority({pid}, {priority}) *uv.os_setpriority()*
 
     Returns: boolean or |luv-fail|
 
-uv.random({len}, {flags}, [{callback}]) *uv.random()*
+uv.random({len}, {flags}, [{callback}])                            *uv.random()*
     Parameters:
     - {len}: integer
     - {flags}: nil (see below)
@@ -3267,7 +3269,7 @@ uv.random({len}, {flags}, [{callback}]) *uv.random()*
     Returns (sync version): string or |luv-fail|
     Returns (async version): 0 or |luv-fail|
 
-uv.translate_sys_error({errcode}) *uv.translate_sys_error()*
+uv.translate_sys_error({errcode})                     *uv.translate_sys_error()*
     Parameters:
     - {errcode}: integer
 
@@ -3280,9 +3282,9 @@ uv.translate_sys_error({errcode}) *uv.translate_sys_error()*
     Returns: string, string or nil
 
 ==============================================================================
-Metrics operations *luv-metrics-operations*
+Metrics operations                                      *luv-metrics-operations*
 
-uv.metrics_idle_time() *uv.metrics_idle_time()*
+uv.metrics_idle_time()                                  *uv.metrics_idle_time()*
     Retrieve the amount of time the event loop has been idle in the kernel’s
     event provider (e.g. epoll_wait). The call is thread safe.
 
