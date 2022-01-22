@@ -319,8 +319,8 @@ uv.cancel({req}) *uv.cancel()*
     - {req}: userdata for sub-type of |uv_req_t|
 
     Cancel a pending request. Fails if the request is executing or has
-    finished executing. Only cancellation of |uv_fs_t|, |uv_getaddrinfo_t|,
-    |uv_getnameinfo_t| and |uv_work_t| requests is currently supported.
+    finished executing. Only cancellation of uv_fs_t, uv_getaddrinfo_t,
+    uv_getnameinfo_t and uv_work_t requests is currently supported.
 
     Returns: 0 or |luv-fail|
 
@@ -329,8 +329,8 @@ uv.req_get_type({req}) *uv.req_get_type()*
     Parameters:
     - {req}: userdata for sub-type of |uv_req_t|
 
-    Returns the name of the struct for a given request (e.g. "fs" for |uv_fs_t|)
-    and the libuv enum integer for the request's type (|uv_req_type|).
+    Returns the name of the struct for a given request (e.g. "fs" for uv_fs_t)
+    and the libuv enum integer for the request's type (uv_req_type).
 
     Returns: string, integer
 
@@ -388,7 +388,7 @@ uv.close({handle}, [{callback}]) *uv.close()*
     will still be deferred to the next iteration of the event loop. It gives
     you a chance to free up any resources associated with the handle.
 
-    In-progress requests, like |uv_connect_t| or |uv_write_t|, are cancelled
+    In-progress requests, like uv_connect_t or uv_write_t, are cancelled
     and have their callbacks called asynchronously with `ECANCELED`.
 
     Returns: Nothing.
@@ -499,7 +499,7 @@ uv.handle_get_type({handle}) *uv.handle_get_type()*
 
     Returns the name of the struct for a given handle (e.g. "pipe" for
     |uv_pipe_t|) and the libuv enum integer for the handle's type
-    (|uv_handle_type|).
+    (uv_handle_type).
 
     Returns: string, integer
 
@@ -1145,7 +1145,7 @@ uv.shutdown({stream}, [{callback}]) *uv.shutdown()*
     pending write requests to complete. The callback is called after shutdown
     is complete.
 
-    Returns: |uv_shutdown_t| userdata or |luv-fail|
+    Returns: uv_shutdown_t userdata or |luv-fail|
 
 uv.listen({stream}, {backlog}, {callback}) *uv.listen()*
     > method form `stream:listen(backlog, callback)`
@@ -1235,7 +1235,7 @@ uv.write({stream}, {data}, [{callback}]) *uv.write()*
 
     The optional {callback} is for knowing when the write is complete.
 
-    Returns: |uv_write_t| userdata or |luv-fail|
+    Returns: uv_write_t userdata or |luv-fail|
 
 uv.write2({stream}, {data}, {send_handle}, [{callback}]) *uv.write2()*
     > method form `stream:write2(data, send_handle, [callback])`
@@ -1249,7 +1249,7 @@ uv.write2({stream}, {data}, {send_handle}, [{callback}]) *uv.write2()*
     Extended write function for sending handles over a pipe. The pipe must be
     initialized with {ipc} option true.
 
-    Returns: |uv_write_t| userdata or |luv-fail|
+    Returns: uv_write_t userdata or |luv-fail|
 
     Note: {send_handle} must be a TCP socket or pipe, which is a server or a
     connection (listening or connected state). Bound sockets or pipes will be
@@ -1455,7 +1455,7 @@ uv.tcp_connect({tcp}, {host}, {port}, {callback}) *uv.tcp_connect()*
 
     Establish an IPv4 or IPv6 TCP connection.
 
-    Returns: |uv_connect_t| userdata or |luv-fail|
+    Returns: uv_connect_t userdata or |luv-fail|
 >
     local client = uv.new_tcp()
     client:connect("127.0.0.1", 8080, function (err)
@@ -1588,7 +1588,7 @@ uv.pipe_connect({pipe}, {name}, [{callback}]) *uv.pipe_connect()*
 
     Connect to the Unix domain socket or the named pipe.
 
-    Returns: |uv_connect_t| userdata or |luv-fail|
+    Returns: uv_connect_t userdata or |luv-fail|
 
     Note: Paths on Unix get truncated to sizeof(sockaddr_un.sun_path) bytes,
     typically between 92 and 108 bytes.
@@ -1827,7 +1827,7 @@ uv.new_udp([{flags}]) *uv.new_udp()*
     Note: For backwards compatibility reasons, {flags} can also be a string or
     integer. When it is a string, it will be treated like the {family} key
     above. When it is an integer, it will be used directly as the {flags}
-    parameter when calling |uv_udp_init_ex|.
+    parameter when calling uv_udp_init_ex.
 
     Returns: |uv_udp_t| userdata or |luv-fail|
 
@@ -2001,7 +2001,7 @@ uv.udp_send({udp}, {data}, {host}, {port}, {callback}) *uv.udp_send()*
     with |uv.udp_bind()| it will be bound to `0.0.0.0` (the "all interfaces" IPv4
     address) and a random port number.
 
-    Returns: |uv_udp_send_t| userdata or |luv-fail|
+    Returns: uv_udp_send_t userdata or |luv-fail|
 
 uv.udp_try_send({udp}, {data}, {host}, {port}) *uv.udp_try_send()*
     > method form `udp:try_send(data, host, port)`
@@ -2160,7 +2160,7 @@ File system operations *luv-file-system-operations*
     When a synchronous version is called (by omitting a callback), the
     function will immediately return the results of the FS call. When an
     asynchronous version is called (by providing a callback), the function
-    will immediately return a |uv_fs_t| userdata and asynchronously execute
+    will immediately return a uv_fs_t userdata and asynchronously execute
     its callback; if an error is encountered, the first and only argument
     passed to the callback will be the err error string; if the operation
     completes successfully, the first argument will be nil and the remaining
@@ -2212,7 +2212,7 @@ uv.fs_close({fd}, [{callback}]) *uv.fs_close()*
     Equivalent to close(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_open({path}, {flags}, {mode}, [{callback}]) *uv.fs_open()*
     Parameters:
@@ -2228,7 +2228,7 @@ uv.fs_open({path}, {flags}, {mode}, [{callback}]) *uv.fs_open()*
     "ax", "xa", "a+", "ax+", or "xa+".
 
     Returns (sync version): integer or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
     Note: On Windows, libuv uses `CreateFileW` and thus the file is always
     opened in binary mode. Because of this, the `O_BINARY` and `O_TEXT` flags are
@@ -2252,7 +2252,7 @@ uv.fs_read({fd}, {size}, [{offset}], [{callback}]) *uv.fs_read()*
     by the read.
 
     Returns (sync version): string or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_unlink({path}, [{callback}]) *uv.fs_unlink()*
     Parameters:
@@ -2264,7 +2264,7 @@ uv.fs_unlink({path}, [{callback}]) *uv.fs_unlink()*
     Equivalent to unlink(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_write({fd}, {data}, [{offset}], [{callback}]) *uv.fs_write()*
     Parameters:
@@ -2284,7 +2284,7 @@ uv.fs_write({fd}, {data}, [{offset}], [{callback}]) *uv.fs_write()*
     by the write.
 
     Returns (sync version): integer or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_mkdir({path}, {mode}, [{callback}]) *uv.fs_mkdir()*
     Parameters:
@@ -2297,7 +2297,7 @@ uv.fs_mkdir({path}, {mode}, [{callback}]) *uv.fs_mkdir()*
     Equivalent to mkdir(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_mkdtemp({template}, [{callback}]) *uv.fs_mkdtemp()*
     Parameters:
@@ -2309,7 +2309,7 @@ uv.fs_mkdtemp({template}, [{callback}]) *uv.fs_mkdtemp()*
     Equivalent to mkdtemp(3).
 
     Returns (sync version): string or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_mkstemp({template}, [{callback}]) *uv.fs_mkstemp()*
     Parameters:
@@ -2322,7 +2322,7 @@ uv.fs_mkstemp({template}, [{callback}]) *uv.fs_mkstemp()*
     Equivalent to mkstemp(3). Returns a temporary file handle and filename.
 
     Returns (sync version): integer, string or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_rmdir({path}, [{callback}]) *uv.fs_rmdir()*
     Parameters:
@@ -2334,14 +2334,14 @@ uv.fs_rmdir({path}, [{callback}]) *uv.fs_rmdir()*
     Equivalent to rmdir(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_scandir({path}, [{callback}]) *uv.fs_scandir()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable|
       - {err}: nil or string
-      - {success}: |uv_fs_t| userdata or nil
+      - {success}: uv_fs_t userdata or nil
 
     Equivalent to scandir(3), with a slightly different API. Returns a handle
     that the user can pass to |uv.fs_scandir_next()|.
@@ -2351,13 +2351,13 @@ uv.fs_scandir({path}, [{callback}]) *uv.fs_scandir()*
     callback is provided and the same userdata is passed to the callback if it
     is provided.
 
-    Returns: |uv_fs_t| userdata or |luv-fail|
+    Returns: uv_fs_t userdata or |luv-fail|
 
 uv.fs_scandir_next({fs}) *uv.fs_scandir_next()*
     Parameters:
-    - {fs}: |uv_fs_t| userdata
+    - {fs}: uv_fs_t userdata
 
-    Called on a |uv_fs_t| returned by |uv.fs_scandir()| to get the next directory
+    Called on a uv_fs_t returned by |uv.fs_scandir()| to get the next directory
     entry data as a name, type pair. When there are no more entries, nil is
     returned.
 
@@ -2402,7 +2402,7 @@ uv.fs_stat({path}, [{callback}]) *uv.fs_stat()*
       - nsec : integer
     - type : string
 
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_fstat({fd}, [{callback}]) *uv.fs_fstat()*
     Parameters:
@@ -2414,7 +2414,7 @@ uv.fs_fstat({fd}, [{callback}]) *uv.fs_fstat()*
     Equivalent to fstat(2).
 
     Returns (sync version): table or |luv-fail| (see |uv.fs_stat()|)
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_lstat({path}, [{callback}]) *uv.fs_lstat()*
     Parameters:
@@ -2426,7 +2426,7 @@ uv.fs_lstat({path}, [{callback}]) *uv.fs_lstat()*
     Equivalent to lstat(2).
 
     Returns (sync version): table or |luv-fail| (see |uv.fs_stat()|)
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_rename({path}, {new_path}, [{callback}]) *uv.fs_rename()*
     Parameters:
@@ -2439,7 +2439,7 @@ uv.fs_rename({path}, {new_path}, [{callback}]) *uv.fs_rename()*
     Equivalent to rename(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_fsync({fd}, [{callback}]) *uv.fs_fsync()*
     Parameters:
@@ -2451,7 +2451,7 @@ uv.fs_fsync({fd}, [{callback}]) *uv.fs_fsync()*
     Equivalent to fsync(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_fdatasync({fd}, [{callback}]) *uv.fs_fdatasync()*
     Parameters:
@@ -2463,7 +2463,7 @@ uv.fs_fdatasync({fd}, [{callback}]) *uv.fs_fdatasync()*
     Equivalent to fdatasync(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_ftruncate({fd}, {offset}, [{callback}]) *uv.fs_ftruncate()*
     Parameters:
@@ -2476,7 +2476,7 @@ uv.fs_ftruncate({fd}, {offset}, [{callback}]) *uv.fs_ftruncate()*
     Equivalent to ftruncate(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_sendfile({out_fd}, {in_fd}, {in_offset}, {size}, [{callback}]) *uv.fs_sendfile()*
     Parameters:
@@ -2491,7 +2491,7 @@ uv.fs_sendfile({out_fd}, {in_fd}, {in_offset}, {size}, [{callback}]) *uv.fs_send
     Limited equivalent to sendfile(2). Returns the number of bytes written.
 
     Returns (sync version): integer or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_access({path}, {mode}, [{callback}]) *uv.fs_access()*
     Parameters:
@@ -2506,7 +2506,7 @@ uv.fs_access({path}, {mode}, [{callback}]) *uv.fs_access()*
     Returns true or false indicating access permission.
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_chmod({path}, {mode}, [{callback}]) *uv.fs_chmod()*
     Parameters:
@@ -2519,7 +2519,7 @@ uv.fs_chmod({path}, {mode}, [{callback}]) *uv.fs_chmod()*
     Equivalent to chmod(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_fchmod({fd}, {mode}, [{callback}]) *uv.fs_fchmod()*
     Parameters:
@@ -2532,7 +2532,7 @@ uv.fs_fchmod({fd}, {mode}, [{callback}]) *uv.fs_fchmod()*
     Equivalent to fchmod(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_utime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_utime()*
     Parameters:
@@ -2546,7 +2546,7 @@ uv.fs_utime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_utime()*
     Equivalent to utime(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_futime({fd}, {atime}, {mtime}, [{callback}]) *uv.fs_futime()*
     Parameters:
@@ -2560,7 +2560,7 @@ uv.fs_futime({fd}, {atime}, {mtime}, [{callback}]) *uv.fs_futime()*
     Equivalent to futime(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_lutime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_lutime()*
     Parameters:
@@ -2574,7 +2574,7 @@ uv.fs_lutime({path}, {atime}, {mtime}, [{callback}]) *uv.fs_lutime()*
     Equivalent to lutime(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_link({path}, {new_path}, [{callback}]) *uv.fs_link()*
     Parameters:
@@ -2587,7 +2587,7 @@ uv.fs_link({path}, {new_path}, [{callback}]) *uv.fs_link()*
     Equivalent to link(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_symlink({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_symlink()*
     Parameters:
@@ -2604,7 +2604,7 @@ uv.fs_symlink({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_symlink()*
     3rd parameter will be treated as the {callback}.
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_readlink({path}, [{callback}]) *uv.fs_readlink()*
     Parameters:
@@ -2616,7 +2616,7 @@ uv.fs_readlink({path}, [{callback}]) *uv.fs_readlink()*
     Equivalent to readlink(2).
 
     Returns (sync version): string or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_realpath({path}, [{callback}]) *uv.fs_realpath()*
     Parameters:
@@ -2628,7 +2628,7 @@ uv.fs_realpath({path}, [{callback}]) *uv.fs_realpath()*
     Equivalent to realpath(3).
 
     Returns (sync version): string or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_chown({path}, {uid}, {gid}, [{callback}]) *uv.fs_chown()*
     Parameters:
@@ -2642,7 +2642,7 @@ uv.fs_chown({path}, {uid}, {gid}, [{callback}]) *uv.fs_chown()*
     Equivalent to chown(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_fchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_fchown()*
     Parameters:
@@ -2656,7 +2656,7 @@ uv.fs_fchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_fchown()*
     Equivalent to fchown(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_lchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_lchown()*
     Parameters:
@@ -2670,7 +2670,7 @@ uv.fs_lchown({fd}, {uid}, {gid}, [{callback}]) *uv.fs_lchown()*
     Equivalent to lchown(2).
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_copyfile({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_copyfile()*
     Parameters:
@@ -2688,32 +2688,32 @@ uv.fs_copyfile({path}, {new_path}, [{flags}], [{callback}]) *uv.fs_copyfile()*
     omitted, then the 3rd parameter will be treated as the {callback}.
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_opendir({path}, [{callback}, [{entries}]]) *uv.fs_opendir()*
     Parameters:
     - {path}: string
     - {callback}: |luv-callable| (async version) or nil (sync version)
       - {err}: nil or string
-      - {dir}: |uv_dir_t| userdata or nil
+      - {dir}: uv_dir_t userdata or nil
     - {entries}: integer or nil
 
     Opens path as a directory stream. Returns a handle that the user can pass
     to |uv.fs_readdir()|. The entries parameter defines the maximum number of
     {entries} that should be returned by each call to |uv.fs_readdir()|.
 
-    Returns (sync version): |uv_dir_t| userdata or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (sync version): uv_dir_t userdata or |luv-fail|
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_readdir({dir}, [{callback}]) *uv.fs_readdir()*
     > method form `dir:readdir([callback])`
     Parameters:
-    - {dir}: |uv_dir_t| userdata
+    - {dir}: uv_dir_t userdata
     - {callback}: |luv-callable| (async version) or nil (sync version)
       - {err}: nil or string
       - {entries}: table or nil (see below)
 
-    Iterates over the directory stream |uv_dir_t| returned by a successful
+    Iterates over the directory stream uv_dir_t returned by a successful
     |uv.fs_opendir()| call. A table of data tables is returned where the number
     of entries n is equal to or less than the {entries} parameter used in
     the associated |uv.fs_opendir()| call.
@@ -2723,12 +2723,12 @@ uv.fs_readdir({dir}, [{callback}]) *uv.fs_readdir()*
       - name : string
       - type : string
 
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_closedir({dir}, [{callback}]) *uv.fs_closedir()*
     > method form `dir:closedir([callback])`
     Parameters:
-    - {dir}: |uv_dir_t| userdata
+    - {dir}: uv_dir_t userdata
     - {callback}: |luv-callable| (async version) or nil (sync version)
       - {err}: nil or string
       - {success}: boolean or nil
@@ -2736,7 +2736,7 @@ uv.fs_closedir({dir}, [{callback}]) *uv.fs_closedir()*
     Closes a directory stream returned by a successful |uv.fs_opendir()| call.
 
     Returns (sync version): boolean or |luv-fail|
-    Returns (async version): |uv_fs_t| userdata
+    Returns (async version): uv_fs_t userdata
 
 uv.fs_statfs({path}, [{callback}]) *uv.fs_statfs()*
     Parameters:
@@ -2757,7 +2757,7 @@ uv.fs_statfs({path}, [{callback}]) *uv.fs_statfs()*
     - ffree : integer
 
 ==============================================================================
-Thread pool work scheduling *uv-thread-pool-work-scheduling*
+Thread pool work scheduling *luv-thread-pool-work-scheduling*
 
     Libuv provides a threadpool which can be used to run user code and get
     notified in the loop thread. This threadpool is internally used to run all
@@ -2785,15 +2785,15 @@ uv.new_work({work_callback}, {after_work_callback}) *uv.new_work()*
     - {after_work_callback}: function
       - {...}: |luv-threadargs| returned from {work_callback}
 
-    Creates and initializes a new |luv_work_ctx_t| (not |uv_work_t|). Returns the
+    Creates and initializes a new luv_work_ctx_t (not uv_work_t). Returns the
     Lua userdata wrapping it.
 
-    Returns: |luv_work_ctx_t| userdata
+    Returns: luv_work_ctx_t userdata
 
 uv.queue_work({work_ctx}, {...}) *uv.queue_work()*
     > method form `work_ctx:queue(...)`
     Parameters:
-    - {work_ctx}: |luv_work_ctx_t| userdata
+    - {work_ctx}: luv_work_ctx_t userdata
     - {...}: |luv-threadargs|
 
     Queues a work request which will run work_callback in a new Lua state in a
@@ -2844,7 +2844,7 @@ uv.getaddrinfo({host}, {service}, [{hints}, [{callback}]]) *uv.getaddrinfo()*
       - protocol : string
       - canonname : string or nil
 
-    Returns (async version): |uv_getaddrinfo_t| userdata or |luv-fail|
+    Returns (async version): uv_getaddrinfo_t userdata or |luv-fail|
 
 uv.getnameinfo({address}, [{callback}]) *uv.getnameinfo()*
     Parameters:
@@ -2863,7 +2863,7 @@ uv.getnameinfo({address}, [{callback}]) *uv.getnameinfo()*
     "netlink", "x25", "ax25", "atmpvc", "appletalk", or "packet".
 
     Returns (sync version): string, string or |luv-fail|
-    Returns (async version): |uv_getnameinfo_t| userdata or |luv-fail|
+    Returns (async version): uv_getnameinfo_t userdata or |luv-fail|
 
 ==============================================================================
 Threading and synchronization utilities *luv-threading-and-synchronization-utilities*
@@ -2878,20 +2878,20 @@ uv.new_thread([{options}], {entry}, {...}) *uv.new_thread()*
     - {entry}: function
     - {...}: |luv-threadargs| passed to {entry}
 
-    Creates and initializes a |luv_thread_t| (not |uv_thread_t|). Returns the
+    Creates and initializes a luv_thread_t (not uv_thread_t). Returns the
     Lua userdata wrapping it and asynchronously executes {entry}, which can be
     either a Lua function or a Lua function dumped to a string. Additional
     arguments {...} are passed to the {entry} function and an optional {options}
     table may be provided. Currently accepted {options} fields are
     {stack_size}.
 
-    Returns: |luv_thread_t| userdata or |luv-fail|
+    Returns: luv_thread_t userdata or |luv-fail|
 
 uv.thread_equal({thread}, {other_thread}) *uv.thread_equal()*
     > method form `thread:equal(other_thread)`
     Parameters:
-    - {thread}: |luv_thread_t| userdata
-    - {other_thread}: |luv_thread_t| userdata
+    - {thread}: luv_thread_t userdata
+    - {other_thread}: luv_thread_t userdata
 
     Returns a boolean indicating whether two threads are the same. This
     function is equivalent to the __eq metamethod.
@@ -2901,12 +2901,12 @@ uv.thread_equal({thread}, {other_thread}) *uv.thread_equal()*
 uv.thread_self() *uv.thread_self()*
     Returns the handle for the thread in which this is called.
 
-    Returns: |luv_thread_t|
+    Returns: luv_thread_t
 
 uv.thread_join({thread}) *uv.thread_join()*
     > method form `thread:join()`
     Parameters:
-    - {thread}: |luv_thread_t| userdata
+    - {thread}: luv_thread_t userdata
 
     Waits for the {thread} to finish executing its entry function.
 
